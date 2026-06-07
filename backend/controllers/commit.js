@@ -1,0 +1,29 @@
+const fs=require('fs').promises;
+const path=require('path');
+const {v4:uuidv4}=require("uuid");
+
+async function commitRepo(message){
+   const repoPath=path.resolve(process.cwd(),".myGit") //original dir path append with myGit folder->C:\tutorials\Full Stack project\Version Control system\backend\.myGit ->ye path create kr rhi
+   const stagingPath=path.join(repoPath,"staging"); //C:\tutorials\Full Stack project\Version Control system\backend\.myGit\staging
+   const commitPath=path.join(repoPath,"commits");
+  
+   try{
+    const commitId=uuidv4();
+    const commitDir=path.join(commitPath,commitId);
+    await fs.mkdir(commitDir,{recursive:true});
+//staging file copy to commit folder
+const files= await fs.readdir(stagingPath);
+for(const file of files){
+    await fs.copyFile(
+        path.join(stagingPath,file),
+        path.join(commitDir,file)
+    );
+};
+//json file to keep the track of commit
+await fs.writeFile(path.join(commitDir,"commit.json"),JSON.stringify({message,date:new Date().toISOString()}));
+console.log(`Commit  ${commitId}  created w ith message: ${message}`);
+   }catch(err){
+    console.error("Error commiting file :", err)
+   }
+};
+module.exports = { commitRepo };
