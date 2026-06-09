@@ -26,7 +26,9 @@ yargs.positional('file',{  // named parameter also called as positional argument
         describe:"commit message",
         type:"string"
     })
-},commitRepo) 
+},(argv)=>{
+commitRepo(argv.message); //agrv k andr additional parameters jo cmd k sth user send krta h store hote h 
+}) 
 .command('push', 'Push changes to the S3',{},pushRepo) 
 
 .command('pull', 'Pull changes from the S3',{},pullRepo) 

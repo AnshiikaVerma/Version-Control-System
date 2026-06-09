@@ -3,7 +3,7 @@ const path=require('path');
 
 async function addRepo(filePath){
     const repoPath=path.resolve(process.cwd(),'.myGit');
-    const stagingPath=path.join(repoPath,"staging"); //create
+    const stagingPath=path.join(repoPath,"staging"); //create inside repoPath->myGit
     try{
 const fileName=path.basename(filePath);
 await fs.mkdir(stagingPath,{recursive:true});
