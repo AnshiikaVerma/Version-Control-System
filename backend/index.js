@@ -38,6 +38,8 @@ commitRepo(argv.message); //agrv k andr additional parameters jo cmd k sth user 
         describe:"commit ID to revert",
         type:"string"
     })
-},revertRepo) 
+},(argv)=>{
+    revertRepo(argv.commitID);
+}) 
 .demandCommand(1,"Please specify a command").help().argv;  //atleast 1 command dena jaruri hai nahi to help show hoga
  
