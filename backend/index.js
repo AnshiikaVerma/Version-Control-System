@@ -40,6 +40,11 @@ commitRepo(argv.message); //agrv k andr additional parameters jo cmd k sth user 
     })
 },(argv)=>{
     revertRepo(argv.commitID);
-}) 
+})
+.command('start',"Starts a new server",{},startServer) 
 .demandCommand(1,"Please specify a command").help().argv;  //atleast 1 command dena jaruri hai nahi to help show hoga
  
+
+function startServer(){
+    console.log("Server is running")
+};
