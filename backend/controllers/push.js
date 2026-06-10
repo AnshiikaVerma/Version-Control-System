@@ -1,10 +1,8 @@
-
 const fs=require('fs').promises;
 const path=require('path');
 const {s3,S3_BUCKET}=require("../config/aws-config");
 
-
-async function pushRepo(remote, branch){
+async function pushRepo(){
     const repoPath=path.resolve(process.cwd(),".myGit");
     const commitPaths=path.join(repoPath,"commits"); 
     try{
