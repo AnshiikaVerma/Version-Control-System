@@ -56,6 +56,7 @@ commitRepo(argv.message); //agrv k andr additional parameters jo cmd k sth user 
  
 
 function startServer(){
+
    const app=express();
    const port=process.env.PORT||3000;
 
@@ -67,20 +68,37 @@ function startServer(){
    }).catch((err)=>{
     console.error("Unable to connect MongoDB : ",err)
    });  //mongodb se connection stablish based on this url
-890
+    890
 
-app.use(cors({origin:'*'}));
-app.get("/",(req,res)=>{
-    res.send("Welcome !")
-});
+    app.use(cors({origin:'*'}));
+    app.get("/",(req,res)=>{
+        res.send("Welcome !")
+    });
 
-const httpServer=http.createServer(app);
-const io=new Server(httpServer,{cors:{
-    origin:"*",
-    methods:["GET","POST"]
-}},)
+    let user="test"; //updated with logged in user
+    const httpServer=http.createServer(app);
+    //socket creation
+    const io=new Server(httpServer,{cors:{
+        origin:"*",
+        methods:["GET","POST"]
+    }},)
 
-io.on("connection",(socket)==>{
-    socket.on()
-})
+    io.on("connection",(socket)=>{
+        socket.on("joinRoom",(userID)=>{
+        user=userID;
+        console.log("===========");
+        console.log(user);
+        console.log("===========");
+        socket.join(userID);
+        })
+    });
+    const db=mongoose.connection;
+    db.once("open",async()=>{
+        console.log("CRUD operations called")
+        //CRUD OPERATIONS
+    });
+
+    httpServer.listen(port,()=>{
+        console.log(`Server is running on port: ${port}`);
+    });
 };
