@@ -21,7 +21,7 @@ for(const file of files){
 };
 //json file to keep the track of commit
 await fs.writeFile(path.join(commitDir,"commit.json"),JSON.stringify({message,date:new Date().toISOString()}));
-console.log(`Commit  ${commitId}  created w ith message: ${message}`);
+console.log(`Commit  ${commitId}  created with message: ${message}`);
    }catch(err){
     console.error("Error commiting file :", err)
    }
