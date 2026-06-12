@@ -1,6 +1,6 @@
 const jwt=require('jsonwebtoken');
 const bcrypt=require('bcryptjs');
-const {MongoClient}=require('mongodb');
+const {MongoClient, ReturnDocument}=require('mongodb');
 const dotenv=require('dotenv');
 var ObjectId=require('mongodb').ObjectId;
 
@@ -106,11 +106,49 @@ res.send(user);
    res.status(500).send("Server Error!");
 }
 };
+
+
 async  function updateUserProfile(req,res){
-res.send("Profile updated");
+const currentID=req.params.id;
+const{email,password}=req.body;
+try{
+  await connectClient();
+  const db=client.db("githubClone"); 
+  const usersCollection=db.collection("users");
+  let updateFields={email}; //email mandatory  to update
+  if(password){ //if pasword also updted then re hashed it and add it to updated fields
+   const salt=await bcrypt.genSalt(10); 
+   const hashedPassword=await bcrypt.hash(password,salt);
+     updateFields.password=hashedPassword;
+  }
+
+  const result=await usersCollection.findOneAndUpdate({
+    _id: new ObjectId(currentID)
+  },{$set:updateFields},{returnDocument:"after"}); //updated return krna h
+  res.send(result);
+}catch(err){
+  console.error("Error during signup: ",err.message);
+   res.status(500).send("Server Error!");
+}
+
 };
 async  function deleteUserProfile(req,res){
-res.send("Profile deleted");
+const currentID=req.params.id;
+try{
+  await connectClient();
+  const db=client.db("githubClone"); 
+  const usersCollection=db.collection("users");
+  const result=await usersCollection.deleteOne({ 
+    _id: new ObjectId(currentID)
+  });
+   if(result.deleteCount==0){
+    return res.status("404").json({message:"User not found!"});
+   }
+   res.json({message:"User profile deleted "});
+}catch(err){
+ console.error("Error during signup: ",err.message);
+   res.status(500).send("Server Error!");
+}
 }
 
 module.exports={
