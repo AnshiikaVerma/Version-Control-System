@@ -2,6 +2,7 @@ const jwt=require('jsonwebtoken');
 const bcrypt=require('bcryptjs');
 const {MongoClient}=require('mongodb');
 const dotenv=require('dotenv');
+var ObjectId=require('mongodb').ObjectId;
 
 dotenv.config();
 const uri=process.env.MONGODB_URL;
@@ -15,8 +16,19 @@ async function connectClient(){
 }
 
 
-const getAllUsers=(req,res)=>{
-    res.send("All USers fetched");
+async  function getAllUsers(req,res){
+  try{
+   await connectClient();
+  const db=client.db("githubClone"); 
+  const usersCollection=db.collection("users");
+
+  const users=await usersCollection.find({}).toArray();
+  res.json(users);
+
+  }catch(err){
+   console.error("Error during signup: ",err.message);
+   res.status(500).send("Server Error!");
+  }
 };
 
  async function signup(req,res){
@@ -75,13 +87,29 @@ res.send("Server error!");
 };
 
 //CRUD
-const getUserProfile=(req,res)=>{
-res.send("Profile fetched");
+async  function getUserProfile(req,res){
+const currentID=req.params.id;
+try{
+ await connectClient();
+  const db=client.db("githubClone"); 
+  const usersCollection=db.collection("users");
+  const user=await usersCollection.findOne({
+    _id: new ObjectId(currentID)
+  });
+  if(!user){
+        return res.status(400).json({message:"User Not found!"})
+
+  }
+res.send(user);
+}catch(err){
+ console.error("Error during signup: ",err.message);
+   res.status(500).send("Server Error!");
+}
 };
-const updateUserProfile=(req,res)=>{
+async  function updateUserProfile(req,res){
 res.send("Profile updated");
 };
-const deleteUserProfile=(req,res)=>{
+async  function deleteUserProfile(req,res){
 res.send("Profile deleted");
 }
 
