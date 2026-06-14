@@ -94,6 +94,11 @@ if(!repoToUpdate){
 }
 repoToUpdate.content.push(content); //array
 repoToUpdate.description=description; //overwrite
+const updatedRepo=await repoToUpdate.save();
+res.jsom({
+    message:"Repository updated successfully!",
+    repository:updatedRepo,
+});
 }
 catch(err){
     console.error("Error during updating  user's repository: ",err.message);
@@ -101,10 +106,37 @@ catch(err){
 }
 }; 
 async function  toggleVisibilityById(req,res){  
-res.send("repo toggled btw pvt and public");
+const id=req.params;  //id of repo which we want to update
+try{
+const repoToUpdate=await Repository.findById(id);
+if(!repoToUpdate){
+     return res.status(404).json({error:"Repository not found"});
+}
+
+repoToUpdate.visibility=!repoToUpdate.visibility; //overwrite
+const updatedRepo=await repoToUpdate.save();
+res.jsom({
+    message:"Visibility toggled  successfully!",
+    repository:updatedRepo,
+});
+}
+catch(err){
+    console.error("Error during updating  user's repository: ",err.message);
+    res.status(500).send("Server Error!");
+}
 };
 async function  deleteRepositoryById(req,res){
-res.send("repo deleted");
+const id=req.params; 
+try{
+const repoTodlt=await Repository.findByIdAndDelete(id);
+if(!repoTodlt){
+     return res.status(404).json({error:"Repository not found"});
+}
+res.json({message:"Repository deleted successfully !"  });
+}catch(err){
+     console.error("Error during deleting  user's repository: ",err.message);
+    res.status(500).send("Server Error!"); 
+}
 };
 
 
