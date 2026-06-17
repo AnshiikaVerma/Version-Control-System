@@ -1,4 +1,4 @@
-import React ,{createContext,useState,useEffect,useContext, children} from 'react';
+import React ,{createContext,useState,useEffect,useContext} from 'react';
 
 const AuthContext=createContext();  
 
@@ -6,7 +6,7 @@ export const useAuth=()=>{ //custom hook
 return useContext(AuthContext); 
 }
 
-export const AuthProvider=({Children})=>{
+export const AuthProvider=({children})=>{
     const [currentUser,setCurrentUser]=useState(null) ;//currentuser ->id  of user
     useEffect(()=>{
         const userId=localStorage.getItem('userId')
