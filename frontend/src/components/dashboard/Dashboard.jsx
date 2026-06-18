@@ -60,7 +60,8 @@ return (
     </aside>
     <main>
 <h3>Your Repositories </h3>
-         {repositories.map((repo)=>
+<div id="search"><input type="text" value={searchQuery} placeholder='Search Your Repositories' onChange={(e)=>setSearchQuery(e.target.value)} /></div>
+         {searchResults.map((repo)=>
             <div key={repo._id}>
                 <h4>{repo.name}</h4>
                 <h4>{repo.description}</h4>

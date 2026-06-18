@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const Repository=require("../models/repoModel");
 const User=require("../models/userModel");
 const Issue=require("../models/issueModel");
-const { res } = require('express');
+// const { res } = require('express');
 
 
 async function  getAllRepositories(req,res){
@@ -70,7 +70,7 @@ const {owner,name,issues,content,description,visibility} =req.body;
 };
 
 async function  fetchRepositoriesForCurrentUser(req,res){ 
-const userId=req.user; //login user ka token and id stored in brwoser local storage
+const userId=req.params.userId; //login user ka token and id stored in brwoser local storage
 try{
 const repositories=await Repository.find({owner:userId});
 if(!repositories||repositories.length==0){

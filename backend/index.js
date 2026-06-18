@@ -1,5 +1,4 @@
 
-
 //start file --controller code ->konse command pe kha redirect krna hai
 const express=require('express');
 const  dotenv=require('dotenv');
@@ -8,6 +7,7 @@ const mongoose=require('mongoose');
 const bodyParser=require('body-parser');
 const http=require('http');
 const{Server}=require('socket.io')
+const mainRouter=require('./routes/main.router')
 
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
@@ -55,6 +55,7 @@ commitRepo(argv.message); //agrv k andr additional parameters jo cmd k sth user 
 .demandCommand(1,"Please specify a command").help().argv;  //atleast 1 command dena jaruri hai nahi to help show hoga
  
 
+
 function startServer(){
 
    const app=express();
@@ -71,13 +72,12 @@ function startServer(){
     890
 
     app.use(cors({origin:'*'}));
-    app.get("/",(req,res)=>{
-        res.send("Welcome !")
-    });
+    
+    app.use("/",mainRouter);  //any req came control goes to  main router 
 
     let user="test"; //updated with logged in user
     const httpServer=http.createServer(app);
-    //socket creation
+
     const io=new Server(httpServer,{cors:{
         origin:"*",
         methods:["GET","POST"]

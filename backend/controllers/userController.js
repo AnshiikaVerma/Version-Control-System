@@ -44,7 +44,7 @@ async  function getAllUsers(req,res){
    }
    const salt=await bcrypt.genSalt(10); //user is unique -->password hashed
    const hashedPassword=await bcrypt.hash(password,salt);
-   const newUser={
+   const newUser={ //mongodb syntax
     username,
     password:hashedPassword,
     email,
@@ -55,7 +55,7 @@ async  function getAllUsers(req,res){
 
   const result=await  usersCollection.insertOne(newUser); //user inserted
   const token=jwt.sign({id:result.insertid},process.env.JWT_SECRET_KEY,{expiresIn:"1h"}); //token
-  res.json({token});
+  res.json({token,userId:result.insertid});
 
    }catch(err){
    console.error("Error during signup: ",err.message);

@@ -3,7 +3,7 @@ const issueController=require("../controllers/issueController");
 
 const issueRouter=express.Router();
 
-//app.get()...  
+//app.get()...  s
 
 issueRouter.post("/issue/create",issueController.createIssue);
 issueRouter.get("/issue/all",issueController.getAllIssues);
