@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import axios from "axios";
-
+import "./dashboard.css";
 
 const Dashboard=()=>{
 const [repositories,setRepositories]=useState([]);
@@ -36,7 +36,48 @@ fetchRepositories();
 fetchSuggestedRepositories();
 },[]);
 
-return <h1>DashBoard</h1>
+useEffect(()=>{
+if(searchQuery==''){
+    setSearchResults(repositories); //sb kuch deikhana h
+}else{
+    const filteredRepos=repositories.filter((repo)=>
+        repo.name.toLowerCase().includes(searchQuery.toLowerCase())  //if search qurey is the part of repo name
+    );
+    setSearchResults(filteredRepos);
+}
+},[repositories,searchQuery]);
+
+return (
+<section id="dashboard">
+    <aside>
+         <h3>Suggested Repositories </h3>
+         {suggestedRepositories.map((repo)=>
+            <div key={repo._id}>
+                <h4>{repo.name}</h4>
+                <h4>{repo.description}</h4>
+            </div>
+         )}
+    </aside>
+    <main>
+<h3>Your Repositories </h3>
+         {repositories.map((repo)=>
+            <div key={repo._id}>
+                <h4>{repo.name}</h4>
+                <h4>{repo.description}</h4>
+            </div>
+         )}
+
+    </main>
+    <aside>
+        <h3>Upcoming  Events</h3>
+        <ul>
+         <li><p>Tech Conference - Dec 15</p></li>
+         <li><p>Developers Meetup - Dec 25</p></li>
+         <li><p>React Summit - Jan 05</p></li>
+        </ul>
+    </aside>
+</section>
+)
 }
 
 export default Dashboard;
