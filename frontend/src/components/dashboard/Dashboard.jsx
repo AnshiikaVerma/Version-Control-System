@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import axios from "axios";
 import "./dashboard.css";
+import { StarIcon, StarFillIcon } from "@primer/octicons-react";
 
 const Dashboard=()=>{
 const [repositories,setRepositories]=useState([]);
@@ -8,6 +9,7 @@ const [searchQuery,setSearchQuery]=useState("");
 const[suggestedRepositories,setSuggestedRepositories]=useState([]); //all public repo from database will be fetch there
 const [searchResults,setSearchResults]=useState([]);
 
+const [starredRepos,setStarredRepos]=useState([]);
 useEffect(()=>{
 const userId=localStorage.getItem("userId");
 const fetchRepositories=async()=>{
@@ -32,8 +34,21 @@ setSuggestedRepositories(res.data);
     }
    
 };
+const fetchStarredRepos = async () => {
+    try {
+        const res = await axios.get(
+            `http://localhost:3002/userProfile/${userId}`
+        );
+
+        setStarredRepos(res.data.starRepos || []);
+    } catch (err) {
+        console.error("Error fetching starred repositories:", err);
+    }
+};
+
 fetchRepositories();
 fetchSuggestedRepositories();
+fetchStarredRepos();
 },[]);
 
 useEffect(()=>{
@@ -47,16 +62,62 @@ if(searchQuery==''){
 }
 },[repositories,searchQuery]);
 
+
+const toggleStar = async (repoId) => {
+    try {
+        const userId = localStorage.getItem("userId");
+
+        const res = await axios.post(
+            "http://localhost:3002/user/starRepository",
+            {
+                userId,
+                repoId
+            }
+        );
+
+        if (res.data.starred) {
+
+            setStarredRepos(prev =>
+                [...new Set([...prev, repoId])]
+            );
+
+        } else {
+
+            setStarredRepos(prev =>
+                prev.filter(id => id !== repoId)
+            );
+        }
+
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 return (
 <section id="dashboard">
     <aside>
          <h3>Suggested Repositories </h3>
-         {suggestedRepositories.map((repo)=>
-            <div key={repo._id}>
-                <h4>{repo.name}</h4>
-                <h4>{repo.description}</h4>
-            </div>
+         {suggestedRepositories.map((repo)=>{
+           const isStarred = starredRepos.some(
+    id => id.toString() === repo._id.toString()
+);
+          return(
+        <div key={repo._id}>
+        <h4>{repo.name} 
+        <span  onClick={()=>toggleStar(repo._id)}
+        style={{cursor:"pointer"}}>
+       {
+            isStarred
+            ? <StarFillIcon size={18} fill="gold"/>
+            : <StarIcon size={18}/>
+        }</span>
+    </h4>
+  <p>{repo.description}</p>
+</div>
          )}
+          )
+         }
+           
     </aside>
     <main>
 <h3>Your Repositories </h3>

@@ -150,6 +150,67 @@ try{
    res.status(500).send("Server Error!");
 }
 }
+//star repos
+async function starRepository(req,res){
+const {userId,repoId}=req.body;
+
+    try{
+        await connectClient();
+        const db=client.db("githubClone");
+        const usersCollection=db.collection("users");
+        const user = await usersCollection.findOne({
+       _id: new ObjectId(userId)
+});
+
+if(!user){
+    return res.status(404).json({
+        message:"User not found"
+    });
+}
+
+const alreadyStarred = user.starRepos?.some(
+    id => id.toString() === repoId
+);
+
+if(alreadyStarred){
+      await usersCollection.updateOne(
+        {_id:new ObjectId(userId)},
+        {
+            $pull:{
+                starRepos:repoId
+            }
+        }
+    );
+
+
+    return res.json({
+        message:"Repository unstarred",
+        starred:false
+    });
+}
+
+// warna star karo
+await usersCollection.updateOne(
+    {_id:new ObjectId(userId)},
+    {
+        $push:{
+            starRepos:repoId
+        }
+    }
+);
+   
+        return res.json({
+            message:"Repository starred",
+            starred:true
+             });
+
+    }catch(err){
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+}
+
+
 
 module.exports={
     getAllUsers,
@@ -158,4 +219,6 @@ module.exports={
     getUserProfile,
     updateUserProfile,
     deleteUserProfile,
+    starRepository,
+   
 }
