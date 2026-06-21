@@ -63,6 +63,7 @@ return(
         // style={{maxWidth:"1000px",height:"1000px",color:"white"}}
          style={{
       width: "100%",
+       minWidth:"1000px",
   maxWidth: "900px",
       display: "flex",
       justifyContent: "center",
@@ -70,10 +71,11 @@ return(
     }}
         value={activityData}
         weekLabels={['Sun','Mon','Tue','Wed','Thu','Fri','Sat']}
-        monthLabels={['Jan','feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']}
-        startDate={new Date("01-01-2025")}
-        rectSize={13} //15
-        space={3} //3
+        monthLabels={["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",]}
+        startDate={new Date("2025-01-01")}
+          endDate={new Date("2025-12-31")}
+        rectSize={18} //15
+        space={4} //3
         rectProps={{
             rx:2.5,   // 2.5 horizontal size of colors
         }}
