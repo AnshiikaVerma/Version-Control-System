@@ -52,14 +52,27 @@ fetchData();
 return(
     <div>
         <h4>Recent Contributions</h4>
+
+        <div className="contribution-card">
+    <h3>Contributions in 2025</h3>
+
+    
+
        <HeatMap
         className="HeatMapProfile"
-        style={{maxWidth:"1000px",height:"1000px",color:"white"}}
+        // style={{maxWidth:"1000px",height:"1000px",color:"white"}}
+         style={{
+      width: "100%",
+  maxWidth: "900px",
+      display: "flex",
+      justifyContent: "center",
+      color:"white"
+    }}
         value={activityData}
         weekLabels={['Sun','Mon','Tue','Wed','Thu','Fri','Sat']}
         monthLabels={['Jan','feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']}
         startDate={new Date("01-01-2025")}
-        rectSize={15} //15
+        rectSize={13} //15
         space={3} //3
         rectProps={{
             rx:2.5,   // 2.5 horizontal size of colors
@@ -68,6 +81,8 @@ return(
         >
           
        </HeatMap>
+
+       </div>
     </div>
 )
 
