@@ -6,6 +6,7 @@ import Dashboard from "./components/dashboard/Dashboard"
 import Profile from "./components/user/Profile"
 import Login from "./components/auth/Login"
 import Signup from "./components/auth/Signup"
+import CreateRepository from "./components/repo/CreateRepository";
 
 //Auth context ->calling this hook gives us  info abt user login status
 import { useAuth } from "./authContext";
@@ -44,7 +45,11 @@ let element=useRoutes([
     {
         path:"/profile",
         element:<Profile/>
-    }
+    },
+    {
+  path: "/create",
+  element: <CreateRepository />
+},
 ]);
 return element;
 }
