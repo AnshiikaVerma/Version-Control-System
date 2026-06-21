@@ -167,3 +167,11 @@ a[class*="UnderlineItem"] svg {
   max-width:1200px;
   overflow-x:auto;
 }
+
+
+#logout:hover{
+border: 1px solid white;
+}
+#logout {
+  margin-right: 30px;
+}

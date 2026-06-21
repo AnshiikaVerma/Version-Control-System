@@ -1,4 +1,13 @@
-/* .counter {
+
+body{
+    margin:0;
+    background:#0d1117;
+    color:white;
+    font-family:sans-serif;
+}
+
+
+.counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -181,4 +190,6 @@
     right: 0;
     border-right-color: var(--border);
   }
-} */
+}
+
+

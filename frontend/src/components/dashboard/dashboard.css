@@ -1,6 +1,46 @@
-#dashboard{
+/* #dashboard{
     display: flex;
    
     width: 1080px;
      justify-content: space-between;
+} */
+
+
+
+#dashboard{
+    display:flex;
+    justify-content:space-between;
+    min-height:100vh;
+    background-color:#0d1117;
+    color:white;
+    padding:30px;
+}
+
+#dashboard aside{
+    width:25%;
+}
+
+#dashboard main{
+    width:40%;
+}
+
+#dashboard h3{
+    color:white;
+}
+
+#dashboard h4{
+    color:#c9d1d9;
+}
+
+#dashboard p,
+#dashboard li{
+    color:#8b949e;
+}
+
+#search input{
+    background:#161b22;
+    border:1px solid #30363d;
+    color:white;
+    padding:8px;
+    border-radius:4px;
 }

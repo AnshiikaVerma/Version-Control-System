@@ -5,8 +5,12 @@ import "./profile.css";
 import Navbar from "../Navbar";
 import { UnderlineNav } from "@primer/react";
 import { BookIcon,RepoIcon } from "@primer/octicons-react";
+import HeatMap from "./HeatMap";
+import HeatMapProfile from "./HeatMap";
+import { useAuth } from "../../authContext";
 
 const Profile=()=>{
+  const {setCurrentUser}=useAuth();
 const navigate=useNavigate();
 const [userDetails,setUserdetails]=useState({
     name:"username"
@@ -29,6 +33,7 @@ fetchUserDetails();
 return (
     <>
     <Navbar/>
+    
     <UnderlineNav aria-label="Repository" >
         <UnderlineNav.Item
           aria-current="page"
@@ -61,7 +66,7 @@ return (
         </UnderlineNav.Item>
       </UnderlineNav>
 
-      <button
+      <button className="logout-btn"
         onClick={() => {
           localStorage.removeItem("token");
           localStorage.removeItem("userId");
@@ -77,7 +82,16 @@ return (
 
       <div className="profile-page-wrapper">
         <div className="user-profile-section">
-          <div className="profile-image"></div>
+      
+          <div
+  className="profile-image"
+  style={{
+    backgroundImage: `url(${
+      userDetails.avatar ||
+ "https://avatars.githubusercontent.com/u/49699333?v=4"
+    })`,
+  }}
+></div>
 
           <div className="name">
             <h3>{userDetails.username}</h3>
@@ -91,9 +105,9 @@ return (
           </div>
         </div>
 
-        {/* <div className="heat-map-section">
-          <HeatMapProfile />
-        </div> */}
+        <div className="heat-map-section">
+          <HeatMapProfile/>
+        </div>
       </div>
     </>
 )

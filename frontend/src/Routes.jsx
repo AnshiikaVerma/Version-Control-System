@@ -43,7 +43,7 @@ let element=useRoutes([
     },
     {
         path:"/profile",
-        element:<Signup/>
+        element:<Profile/>
     }
 ]);
 return element;

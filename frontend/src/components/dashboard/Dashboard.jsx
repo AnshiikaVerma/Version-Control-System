@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import axios from "axios";
 import "./dashboard.css";
 import { StarIcon, StarFillIcon } from "@primer/octicons-react";
+import Navbar from '../Navbar';
 
 const Dashboard=()=>{
 const [repositories,setRepositories]=useState([]);
@@ -94,6 +95,8 @@ const toggleStar = async (repoId) => {
 };
 
 return (
+    <>
+    <Navbar/> 
 <section id="dashboard">
     <aside>
          <h3>Suggested Repositories </h3>
@@ -139,6 +142,7 @@ return (
         </ul>
     </aside>
 </section>
+</>
 )
 }
 
