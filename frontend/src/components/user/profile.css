@@ -15,6 +15,11 @@
  
 
 }
+.name h3 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 20px;
+}
 
 .user-profile-section {
   /* width: 250px; */
@@ -158,4 +163,7 @@ a[class*="UnderlineItem"] svg {
   border-radius: 10px;
   padding: 20px;
   background-color: #0d1117;
+   width:100%;
+  max-width:1200px;
+  overflow-x:auto;
 }
