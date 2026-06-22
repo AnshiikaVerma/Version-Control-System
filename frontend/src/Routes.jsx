@@ -8,6 +8,8 @@ import Login from "./components/auth/Login"
 import Signup from "./components/auth/Signup"
 import CreateRepository from "./components/repo/CreateRepository";
 import StarredRepositories from "./components/repo/StarredRepositories";
+
+import RepositoryDetails from "./components/repo/RepositoryDetails";
 //Auth context ->calling this hook gives us  info abt user login status
 import { useAuth } from "./authContext";
 
@@ -54,6 +56,10 @@ let element=useRoutes([
    path:"/repo",
    element:<StarredRepositories/>
 },
+{
+   path:"/repo/:id",
+   element:<RepositoryDetails/>
+}
 ]);
 return element;
 }
