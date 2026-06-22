@@ -61,6 +61,35 @@ const [description, setDescription] = useState("");
 };
 
 
+const toggleIssueStatus = async (issue) => {
+  try {
+
+    const newStatus =
+      issue.status === "open"
+        ? "closed"
+        : "open";
+
+    await axios.put(
+      `http://localhost:3002/issue/update/${issue._id}`,
+      {
+        title: issue.title,
+        description: issue.description,
+        status: newStatus,
+      }
+    );
+
+    const issueRes = await axios.get(
+      `http://localhost:3002/issue/all/${id}`
+    );
+
+    setIssues(issueRes.data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
   if (!repo) {
     return <h2>Loading...</h2>;
   }
@@ -103,6 +132,13 @@ const [description, setDescription] = useState("");
       <p>{issue.description}</p>
 
       <p>Status: {issue.status}</p>
+      <button
+  onClick={() => toggleIssueStatus(issue)}
+>
+  {issue.status === "open"
+    ? "Close Issue"
+    : "Reopen Issue"}
+</button>
 
       <hr />
     </div>
