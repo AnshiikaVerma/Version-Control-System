@@ -3,7 +3,16 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 
+import { useNavigate } from "react-router-dom";
+
+
+
+
 const RepositoryDetails = () => {
+
+  
+const navigate = useNavigate();
+
   const { id } = useParams();
 
   const [repo, setRepo] = useState(null);
@@ -11,6 +20,11 @@ const RepositoryDetails = () => {
   const [issues, setIssues] = useState([]);
 const [title, setTitle] = useState("");
 const [description, setDescription] = useState("");
+
+//delete update Repository
+const [editName,setEditName] = useState("");
+const [editDescription,setEditDescription] = useState("");
+const [editing,setEditing] = useState(false);
 
   useEffect(() => {
     const fetchRepo = async () => {
@@ -20,6 +34,7 @@ const [description, setDescription] = useState("");
         );
 
         setRepo(res.data);
+        
           //fetching issues too
           const issueRes = await axios.get(
       `http://localhost:3002/issue/all/${id}`
@@ -33,6 +48,8 @@ const [description, setDescription] = useState("");
     };
 
     fetchRepo();
+//     setEditName(repo.name);
+// setEditDescription(repo.description);
   }, [id]);
 
 
@@ -59,6 +76,17 @@ const [description, setDescription] = useState("");
     console.error(err);
   }
 };
+//update repo
+//   const updateRepository=async()=>{
+//     try{
+   
+//     }catch(err){
+//         console.error(err);
+//     }
+//   };
+
+
+
 
 //update issue
 const toggleIssueStatus = async (issue) => {
@@ -140,7 +168,16 @@ const deleteIssue = async (issueId) => {
           {issues.length}
         </h3>
 
+        <button
+  onClick={() => navigate(`/repo/edit/${repo._id}`)}
+>
+  Edit Repository
+</button>
+
+
+
          <hr/>
+
 
   <h2>Issues ({issues.length})</h2>
 {
@@ -170,6 +207,21 @@ const deleteIssue = async (issueId) => {
     ? "Close Issue"
     : "Reopen Issue"}
 </button>
+
+<button
+  onClick={() => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this issue?"
+      )
+    ) {
+      deleteIssue(issue._id);
+    }
+  }}
+>
+  Delete Issue
+</button>
+
 
       <hr />
     </div>
