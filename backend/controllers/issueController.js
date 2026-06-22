@@ -6,7 +6,7 @@ const Issue=require("../models/issueModel");
 
 
 async function createIssue(req,res){
-   const id=req.params;
+   const {id}=req.params;
    const {title,description}=req.body;
 try{
  const issue=new Issue({
@@ -25,31 +25,35 @@ try{
 };
 
 async function updateIssueById(req,res){
-    const id=req.params; //issue id
+    const { id}=req.params; //issue id
     const { title,status,description}=req.body;
     try{
     const issueToUpdate=await Issue.findById(id);
     if(!issueToUpdate){
         return res.status(404).json({error:"Issue Not found"});
     }
-    issue.title=title;
-    issue.status=status;
-    issue.description=description;
+    issueToUpdate.title=title;
+   issueToUpdate.status=status;
+   issueToUpdate.description=description;
     await issueToUpdate.save();
-    res.status(201).json(issue);
+    res.status(200).json(issueToUpdate);
     }catch(err){
          console.error("Error during issue updation: ",err.message);
           res.status(500).send("Server Error!");
     }
 };
 async function deleteIssueById(req,res){
-     const id=req.params; 
+     const {id}=req.params; 
      try{
    const issueTodlt=await Issue.findByIdAndDelete(id);
    if(!issueTodlt){
      return res.status(404).json({error:"Issue Not found"});
    }
-   res.json(issueTodlt,{message:"Issue deleted successfully !"  });
+//    res.json(issueTodlt,{message:"Issue deleted successfully !"  }); //res.json obj leta h
+res.json({
+    message:"Issue deleted successfully" ,
+    issue:issueTodlt,
+})
      }catch(err){
         console.error("Error during issue deletion: ",err.message);
           res.status(500).send("Server Error!");
@@ -57,10 +61,10 @@ async function deleteIssueById(req,res){
 };
 
 async function getAllIssues(req,res){  //ek repo k saare issue
-    const id=req.params; //repo id whose issue we wanana fetch
+    const {id}=req.params; //repo id whose issue we wanana fetch
     try{
 const issues=await Issue.find({repository:id});
-if(!issues){
+if(issues.length==0){ //issues ka array return hoga so !issue wrong h
 return res.status(404).json({message:"Issues not found!"})
 }
 res.status(200).json(issues);
@@ -71,7 +75,7 @@ res.status(200).json(issues);
 };
 
 async function getIssueById(req,res){
-    const id=req.params; //issue id
+    const {id}=req.params; //issue id
    
     try{
     const issue=await Issue.findById(id);
