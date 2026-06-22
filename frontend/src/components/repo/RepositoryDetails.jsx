@@ -60,7 +60,7 @@ const [description, setDescription] = useState("");
   }
 };
 
-
+//update issue
 const toggleIssueStatus = async (issue) => {
   try {
 
@@ -89,6 +89,25 @@ const toggleIssueStatus = async (issue) => {
   }
 };
 
+//delete issue
+
+const deleteIssue = async (issueId) => {
+  try {
+
+    await axios.delete(
+      `http://localhost:3002/issue/delete/${issueId}`
+    );
+
+    const issueRes = await axios.get(
+      `http://localhost:3002/issue/all/${id}`
+    );
+
+    setIssues(issueRes.data);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   if (!repo) {
     return <h2>Loading...</h2>;
@@ -131,7 +150,19 @@ const toggleIssueStatus = async (issue) => {
 
       <p>{issue.description}</p>
 
-      <p>Status: {issue.status}</p>
+      <p>Status: 
+       <span
+    style={{
+      fontWeight: "bold",
+      marginLeft: "8px",
+      color:
+        issue.status === "open"
+          ? "green"
+          : "red",
+    }}  
+  >  {issue.status}</span>
+
+        </p>
       <button
   onClick={() => toggleIssueStatus(issue)}
 >
