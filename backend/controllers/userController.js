@@ -54,8 +54,8 @@ async  function getAllUsers(req,res){
    }
 
   const result=await  usersCollection.insertOne(newUser); //user inserted
-  const token=jwt.sign({id:result.insertid},process.env.JWT_SECRET_KEY,{expiresIn:"1h"}); //token
-  res.json({token,userId:result.insertid});
+  const token=jwt.sign({id:result.insertId},process.env.JWT_SECRET_KEY,{expiresIn:"1h"}); //token
+  res.json({token,userId:result.insertId});
 
    }catch(err){
    console.error("Error during signup: ",err.message);

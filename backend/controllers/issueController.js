@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const Repository=require("../models/repoModel");
 const User=require("../models/userModel");
 const Issue=require("../models/issueModel");
-// const { res } = require('express');
+
 
 
 async function createIssue(req,res){
@@ -65,7 +65,8 @@ async function getAllIssues(req,res){  //ek repo k saare issue
     try{
 const issues=await Issue.find({repository:id});
 if(issues.length==0){ //issues ka array return hoga so !issue wrong h
-return res.status(404).json({message:"Issues not found!"})
+// return res.status(404).json({message:"Issues not found!"})
+return res.status(200).json(issues);
 }
 res.status(200).json(issues);
     }catch(err){

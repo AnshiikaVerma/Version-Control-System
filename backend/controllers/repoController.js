@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const Repository=require("../models/repoModel");
 const User=require("../models/userModel");
 const Issue=require("../models/issueModel");
-// const { res } = require('express');
+
 
 
 async function  getAllRepositories(req,res){
@@ -18,7 +18,7 @@ async function  getAllRepositories(req,res){
 async function  fetchRepositoryById(req,res){
     const repoID=req.params.id; 
 try{
-const repository= await Repository.find({_id:repoID}).populate("owner").populate("issues");
+const repository= await Repository.findById({_id:repoID}).populate("owner").populate("issues");
 res.json(repository);
 }catch(err){
     console.error("Error during fetching repository",err.message);
@@ -85,17 +85,19 @@ res.json({message:"Repositories found ",repositories});
 };
 
 async function  UpdateRepositoryById(req,res){ 
-const id=req.params;
-const {content,description}=req.body;
+const {id}=req.params;
+const {name, description, visibility}=req.body;
 try{
 const repoToUpdate=await Repository.findById(id);
 if(!repoToUpdate){
      return res.status(404).json({error:"Repository not found"});
 }
-repoToUpdate.content.push(content); //array
+// repoToUpdate.content.push(content); //array
+repoToUpdate.name=name;
 repoToUpdate.description=description; //overwrite
+repoToUpdate.visibility = visibility;
 const updatedRepo=await repoToUpdate.save();
-res.jsom({
+res.json({
     message:"Repository updated successfully!",
     repository:updatedRepo,
 });
@@ -106,7 +108,7 @@ catch(err){
 }
 }; 
 async function  toggleVisibilityById(req,res){  
-const id=req.params;  //id of repo which we want to update
+const {id}=req.params;  //id of repo which we want to update
 try{
 const repoToUpdate=await Repository.findById(id);
 if(!repoToUpdate){
@@ -126,7 +128,7 @@ catch(err){
 }
 };
 async function  deleteRepositoryById(req,res){
-const id=req.params; 
+const {id}=req.params; 
 try{
 const repoTodlt=await Repository.findByIdAndDelete(id);
 if(!repoTodlt){
