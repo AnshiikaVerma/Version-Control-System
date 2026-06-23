@@ -6,8 +6,8 @@ const issueRouter=express.Router();
 //app.get()...  s
 
 issueRouter.post("/issue/create",issueController.createIssue);
-issueRouter.get("/issue/all",issueController.getAllIssues);
-issueRouter.get("/issue/:id",issueController.getIssueById);
+issueRouter.post("/issue/create/:id",issueController.createIssue);
+issueRouter.get("/issue/all/:id",issueController.getAllIssues);
 issueRouter.put("/issue/update/:id",issueController.updateIssueById);
 issueRouter.delete("/issue/delete/:id",issueController.deleteIssueById);
 
