@@ -3,8 +3,12 @@ import axios from "axios";
 import "./dashboard.css";
 import { StarIcon, StarFillIcon } from "@primer/octicons-react";
 import Navbar from '../Navbar';
+import { useNavigate } from "react-router-dom";
+
 
 const Dashboard=()=>{
+
+    const navigate = useNavigate();
 const [repositories,setRepositories]=useState([]);
 const [searchQuery,setSearchQuery]=useState("");
 const[suggestedRepositories,setSuggestedRepositories]=useState([]); //all public repo from database will be fetch there
@@ -105,17 +109,25 @@ return (
     id => id.toString() === repo._id.toString()
 );
           return(
+        // <div key={repo._id}>
         <div key={repo._id}>
-        <h4>{repo.name} 
-        <span  onClick={()=>toggleStar(repo._id)}
+        <div
+   
+   onClick={() => navigate(`/repo/${repo._id}`)}
+   style={{ cursor: "pointer" }}
+>
+        <h4>{repo.name}  </h4>
+            </div>
+      <h4> <span  onClick={()=>toggleStar(repo._id)}
         style={{cursor:"pointer"}}>
        {
             isStarred
             ? <StarFillIcon size={18} fill="gold"/>
             : <StarIcon size={18}/>
-        }</span>
-    </h4>
+        }</span> </h4> 
+   
   <p>{repo.description}</p>
+
 </div>
          )}
           )
@@ -126,7 +138,12 @@ return (
 <h3>Your Repositories </h3>
 <div id="search"><input type="text" value={searchQuery} placeholder='Search Your Repositories' onChange={(e)=>setSearchQuery(e.target.value)} /></div>
          {searchResults.map((repo)=>
-            <div key={repo._id}>
+            // <div key={repo._id}>
+            <div
+   key={repo._id}
+   onClick={() => navigate(`/repo/${repo._id}`)}
+   style={{ cursor: "pointer" }}
+>
                 <h4>{repo.name}</h4>
                 <h4>{repo.description}</h4>
             </div>
