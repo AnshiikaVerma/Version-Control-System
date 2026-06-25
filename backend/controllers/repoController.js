@@ -89,9 +89,9 @@ async function  fetchRepositoriesForCurrentUser(req,res){
 const userId=req.params.userId; //login user ka token and id stored in brwoser local storage
 try{
 const repositories=await Repository.find({owner:userId});
-if(!repositories||repositories.length==0){
-    return res.status(404).json({error:"User Repositories not found"});
-}
+// if(!repositories||repositories.length==0){
+//     return res.status(404).json({error:"User Repositories not found"});
+// }
 res.json({message:"Repositories found ",repositories});
 }catch(err){
     console.error("Error during fetching all user's repositories: ",err.message);

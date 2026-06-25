@@ -112,47 +112,6 @@ return (
     </>
 )
 }
-// const Profile=()=>{
 
-// const [starredRepos,setStarredRepos]=useState([]);
-
-// useEffect(()=>{
-
-//     const fetchProfile=async()=>{
-
-//         const userId=localStorage.getItem("userId");
-
-//         const res=await axios.get(
-//             `http://localhost:3002/user/userProfile/${userId}`
-//         );
-
-//         setStarredRepos(
-//             res.data.starRepos || []
-//         );
-//     }
-
-//     fetchProfile();
-
-// },[]);
-
-// return(
-// <div>
-
-// <h2>Starred Repositories</h2>
-
-// <ul>
-// {
-// starredRepos.map((repoId,index)=>(
-// <li key={index}>
-// {repoId}
-// </li>
-// ))
-// }
-// </ul>
-
-// </div>
-// )
-
-// }
 
 export default Profile;

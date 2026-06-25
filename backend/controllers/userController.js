@@ -54,10 +54,11 @@ async  function getAllUsers(req,res){
    }
 
   const result=await  usersCollection.insertOne(newUser); //user inserted
-  const token=jwt.sign({id:result.insertId},process.env.JWT_SECRET_KEY,{expiresIn:"1h"}); //token
-  res.json({token,userId:result.insertId});
-
+  const token=jwt.sign({id:result.insertedId},process.env.JWT_SECRET_KEY,{expiresIn:"1h"}); //token
+  res.json({token,userId:result.insertedId});
+console.log("INSERTED ID =", result.insertedId);
    }catch(err){
+    console.error(err.stack);
    console.error("Error during signup: ",err.message);
    res.status(500).send("Server Error!");
    }
@@ -78,6 +79,7 @@ async function login(req,res){
    if(!isMatch){
      return res.status(400).json({message:"Invalid Credentials!"})
    }
+   console.log("USER ID =", user._id);
    const token=jwt.sign({id:user._id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"});
    res.json({token,userId:user._id});
   }catch(err){
