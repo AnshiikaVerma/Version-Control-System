@@ -54,7 +54,7 @@ async  function getAllUsers(req,res){
    }
 
   const result=await  usersCollection.insertOne(newUser); //user inserted
-  const token=jwt.sign({id:result.insertedId},process.env.JWT_SECRET_KEY,{expiresIn:"1h"}); //token
+  const token=jwt.sign({id:result.insertedId},process.env.JWT_SECRET_KEY,{expiresIn:"7d"}); //token
   res.json({token,userId:result.insertedId});
 console.log("INSERTED ID =", result.insertedId);
    }catch(err){
@@ -80,7 +80,7 @@ async function login(req,res){
      return res.status(400).json({message:"Invalid Credentials!"})
    }
    console.log("USER ID =", user._id);
-   const token=jwt.sign({id:user._id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"});
+   const token=jwt.sign({id:user._id},process.env.JWT_SECRET_KEY,{expiresIn:"7d"});
    res.json({token,userId:user._id});
   }catch(err){
 console.error("Error during login",err.message);

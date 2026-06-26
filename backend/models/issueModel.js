@@ -21,7 +21,12 @@ const IssueSchema =new Schema({
         type:Schema.Types.ObjectId,
         ref:"Repository",
         required:true,
-    }
+    },
+    createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+},
 })
 
 const Issue=mongoose.model("Issue",IssueSchema);

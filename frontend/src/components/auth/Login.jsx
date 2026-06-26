@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../../api/axios";
 import { useAuth } from "../../authContext";
 
 
@@ -21,7 +22,7 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:3002/login", {
+      const res = await api.post("http://localhost:3002/login", {  ////replace  await axios.post with  await api.post
         email: email,
         password: password,
       });
