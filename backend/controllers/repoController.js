@@ -7,7 +7,7 @@ const Issue=require("../models/issueModel");
 
 async function  getAllRepositories(req,res){
   try{
-    const repos=await Repository.find({}).populate("owner").populate("issues");
+    const repos=await Repository.find({}).populate("owner").populate("issues");   //    visibility: true  Dashboard me Suggested Repositories me sirf public repositories aayengi.
     res.json(repos);
   }catch(err){
     console.error("Error during fetching all repositories: ",err.message);
@@ -23,6 +23,14 @@ async function fetchRepositoryById(req,res){
         const repository = await Repository.findById(repoID)
             .populate("owner")
             .populate("issues");
+
+    //   if (repository.visibility === false &&repository.owner._id.toString() !== req.user?.id)
+    //      {
+    //       return res.status(403).json({
+    //             message: "This repository is private."
+    //         });
+    //      }  
+
 
         res.json(repository);
     }

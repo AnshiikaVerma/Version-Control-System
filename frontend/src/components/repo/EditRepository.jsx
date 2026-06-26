@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../../api/axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +18,7 @@ useEffect(() => {
 
     try {
 
-      const res = await axios.get(
+      const res = await api.get(
         `http://localhost:3002/repo/${id}`
       );
 
@@ -36,19 +37,19 @@ useEffect(() => {
 
 const updateRepository = async () => {
   try {
- const token = localStorage.getItem("token");
-    await axios.put(
+//  const token = localStorage.getItem("token");
+    await api.put(
       `http://localhost:3002/repo/update/${id}`,
       {
         name,
         description,
         visibility
       },
-       {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
+  //      {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // }
     );
 
     alert("Repository Updated Successfully");

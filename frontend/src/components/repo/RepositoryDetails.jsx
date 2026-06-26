@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../../api/axios";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 
@@ -25,7 +26,7 @@ const [editing,setEditing] = useState(false);
   useEffect(() => {
     const fetchRepo = async () => {
       try {
-        const res = await axios.get(
+        const res = await api.get(
           `http://localhost:3002/repo/${id}`
         );
 
@@ -34,7 +35,7 @@ const [editing,setEditing] = useState(false);
       setEditDescription(res.data.description);
 
            //fetching issues too
-          const issueRes = await axios.get(
+          const issueRes = await api.get(
       `http://localhost:3002/issue/all/${id}`
     );
 
@@ -51,21 +52,21 @@ const [editing,setEditing] = useState(false);
 
   const createIssue = async () => {
   try {
-      const token = localStorage.getItem("token");
-    await axios.post(
+      // const token = localStorage.getItem("token");
+    await api.post(
       `http://localhost:3002/issue/create/${id}`,
       {
         title,
         description,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
     );
 
-    const issueRes = await axios.get(
+    const issueRes = await api.get(
       `http://localhost:3002/issue/all/${id}`
     );
 
@@ -82,20 +83,20 @@ const [editing,setEditing] = useState(false);
 //curr add
 const deleteRepository = async () => {
   try {
-     const token = localStorage.getItem("token");
+    //  const token = localStorage.getItem("token");
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this repository?"
     );
 
     if (!confirmDelete) return;
 
-    await axios.delete(
+    await api.delete(
       `http://localhost:3002/repo/delete/${id}`,
-       {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
+  //      {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // }
     );
 
     window.location.href = "/";
@@ -108,27 +109,27 @@ const deleteRepository = async () => {
 //update
 const toggleIssueStatus = async (issue) => {
   try {
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
     const newStatus =
       issue.status === "open"
         ? "closed"
         : "open";
 
-    await axios.put(
+    await api.put(
       `http://localhost:3002/issue/update/${issue._id}`,
       {
         title: issue.title,
         description: issue.description,
         status: newStatus,
       },
-       {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
+  //      {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // }
     );
 
-    const issueRes = await axios.get(
+    const issueRes = await api.get(
       `http://localhost:3002/issue/all/${id}`
     );
 
@@ -142,17 +143,17 @@ const token = localStorage.getItem("token");
 
 const deleteIssue = async (issueId) => {
   try {
- const token = localStorage.getItem("token");
-    await axios.delete(
+//  const token = localStorage.getItem("token");
+    await api.delete(
       `http://localhost:3002/issue/delete/${issueId}`,
-      {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
+  //     {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // }
     );
 
-    const issueRes = await axios.get(
+    const issueRes = await api.get(
       `http://localhost:3002/issue/all/${id}`
     );
 

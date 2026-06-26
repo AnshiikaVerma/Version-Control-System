@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import axios from "axios";
+// import axios from "axios";
+import api from "../../api/axios";
 import "./dashboard.css";
 import { StarIcon, StarFillIcon } from "@primer/octicons-react";
 import Navbar from '../Navbar';
@@ -22,7 +23,7 @@ const fetchRepositories=async()=>{
         // const response=await fetch(`http://localhost:3002/repo/user/${userId}`);
         // const data= await response.json();
         // setRepositories(data.repositories);
-const res=await axios.get(`http://localhost:3002/repo/user/${userId}`);
+const res=await api.get(`http://localhost:3002/repo/user/${userId}`);
 setRepositories(res.data.repositories);
     }catch(err){
         console.error("Error while fetching repositories: ",err)
@@ -31,7 +32,7 @@ setRepositories(res.data.repositories);
 };
 const fetchSuggestedRepositories=async()=>{
     try{ 
-const res=await axios.get("http://localhost:3002/repo/all");
+const res=await api.get("http://localhost:3002/repo/all");
 setSuggestedRepositories(res.data);
 
     }catch(err){
@@ -41,7 +42,7 @@ setSuggestedRepositories(res.data);
 };
 const fetchStarredRepos = async () => {
     try {
-        const res = await axios.get(
+        const res = await api.get(
             `http://localhost:3002/userProfile/${userId}`
         );
 
@@ -72,7 +73,7 @@ const toggleStar = async (repoId) => {
     try {
         const userId = localStorage.getItem("userId");
 
-        const res = await axios.post(
+        const res = await api.post(
             "http://localhost:3002/user/starRepository",
             {
                 userId,

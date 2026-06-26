@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
 
@@ -27,9 +28,9 @@ const CreateRepository = () => {
 
     try {
     const owner = localStorage.getItem("userId");
-     const token = localStorage.getItem("token");
+    //  const token = localStorage.getItem("token");
 
-      const response = await axios.post(
+      const response = await api.post(   //replace  await axios.post with  await api.post
         "http://localhost:3002/repo/create",
         {
           owner,
@@ -39,11 +40,11 @@ const CreateRepository = () => {
           content: [],
           issues: [],
         },
-        {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
+  //       {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`
+  //   }
+  // }
       );
 
       alert("Repository Created Successfully");

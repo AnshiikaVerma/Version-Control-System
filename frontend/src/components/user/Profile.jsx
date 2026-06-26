@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from "react";
-import axios from "axios";
+// import api from "api";
+import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
 import Navbar from "../Navbar";
@@ -21,7 +22,7 @@ const fetchUserDetails=async()=>{
     const userId=localStorage.getItem("userId");
     if(userId){ //if user id not avialable then nsvigate to login ->login in projectRouter
    try{
-  const response=await axios.get(`http://localhost:3002/userProfile/${userId}`);
+  const response=await api.get(`http://localhost:3002/userProfile/${userId}`);
   setUserdetails(response.data);
    }catch(err){
 console.error("Cannot fetch user details : ",err);
