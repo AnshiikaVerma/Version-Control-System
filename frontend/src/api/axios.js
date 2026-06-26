@@ -17,4 +17,28 @@ api.interceptors.request.use( //Interceptor matlab Har request ke bhejne se pehl
   (error) => Promise.reject(error)
 );
 
+
+// Response Interceptor
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+
+  (error) => {
+    if (error.response && error.response.status === 401) {
+
+    //   localStorage.removeItem("token");
+    //   localStorage.removeItem("userId");
+
+      localStorage.clear();
+
+      alert("Session Expired. Please Login Again.");
+
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;
