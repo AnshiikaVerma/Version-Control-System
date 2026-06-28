@@ -14,6 +14,12 @@ authMiddleware,
 
 repoRouter.get("/repo/all",repoController.getAllRepositories);
 repoRouter.get("/repo/:id",repoController.fetchRepositoryById);  
+
+repoRouter.get(
+  "/repo/:id/commits",
+  repoController.getRepositoryCommits
+);
+
 repoRouter.get("/repo/name/:name",repoController.fetchRepositoryByName);
 repoRouter.get("/repo/user/:userId",repoController.fetchRepositoriesForCurrentUser);
 repoRouter.put(

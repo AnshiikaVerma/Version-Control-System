@@ -22,7 +22,18 @@ const { revertRepo } = require("./controllers/revert");
 dotenv.config();   
 
 yargs(hideBin(process.argv))
-.command('init', 'Initialize a new repository',{},initRepo) 
+// .command('init', 'Initialize a new repository',{},initRepo) 
+.command('init [repoId]',"Initialize a new repository",
+    (yargs) => {
+        yargs.positional('repoId', {
+            describe: "Repository ID from the website",
+            type: "string",
+        });
+    },
+    (argv) => {
+        initRepo(argv.repoId);
+    }
+)
 .command('add <file>', 'Add a file to a repository ',(yargs)=>{    
 yargs.positional('file',{  // named parameter also called as positional argument
     describe:"file to be added to staging area",

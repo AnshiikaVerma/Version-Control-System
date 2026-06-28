@@ -5,8 +5,24 @@ const {s3,S3_BUCKET}=require("../config/aws-config");
 async function pushRepo(){
     const repoPath=path.resolve(process.cwd(),".myGit");
     const commitPaths=path.join(repoPath,"commits"); 
+
+const configPath = path.join(repoPath, "config.json");
+const config = JSON.parse(await fs.readFile(configPath, "utf-8"));
+
+if (!config.repoId) {
+    console.log(
+        "No repository is associated. Please run: node index.js init <repoId>"
+    );
+    return;
+}
+
     try{
       const commitDirs=await fs.readdir(commitPaths); //commits ->many dir of commit -->each dir  has many files
+      //new add
+      if (commitDirs.length === 0) {
+    console.log("No commits found to push.");
+    return;
+}
       for(const commitDir of commitDirs){
        const commitPath=path.join(commitPaths,commitDir); //maincommitdir->eachdir ka path
        const files=await fs.readdir(commitPath);
@@ -15,7 +31,8 @@ async function pushRepo(){
              const fileContent=await fs.readFile(filePath);
              const params={
                 Bucket: S3_BUCKET,
-                Key:`commits/${commitDir}/${file}`, 
+                // Key:`commits/${commitDir}/${file}`, 
+                Key: `repositories/${config.repoId}/commits/${commitDir}/${file}`,
                 Body:fileContent,
              };
              await s3.upload(params).promise();

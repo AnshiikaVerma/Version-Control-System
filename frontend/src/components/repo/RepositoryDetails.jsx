@@ -195,6 +195,20 @@ const isOwner =repo?.owner?._id?.toString() === currentUserId;
           {repo.owner?.username}
         </h3>
 
+
+        <h3>
+  Repository ID : {repo._id}
+</h3>
+
+<button
+  onClick={() => {
+    navigator.clipboard.writeText(repo._id);
+    alert("Repository ID copied!");
+  }}
+>
+  Copy Repository ID
+</button>
+
         <h3>
           Issues :
           {" "}
