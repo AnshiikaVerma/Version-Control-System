@@ -22,6 +22,14 @@ const [description, setDescription] = useState("");
 const [editName,setEditName] = useState("");
 const [editDescription,setEditDescription] = useState("");
 const [editing,setEditing] = useState(false);
+//commits
+const [commits, setCommits] = useState([]);
+//commits file
+const [expandedCommit, setExpandedCommit] = useState(null);
+
+const [commitFiles, setCommitFiles] = useState({});
+
+
 
   useEffect(() => {
     const fetchRepo = async () => {
@@ -40,7 +48,12 @@ const [editing,setEditing] = useState(false);
     );
 
     setIssues(issueRes.data);
+//commit fetching too
+const commitRes = await api.get(
+  `http://localhost:3002/repo/${id}/commits`
+);
 
+setCommits(commitRes.data);
 
       } catch (err) {
         console.error(err);
@@ -79,6 +92,42 @@ const [editing,setEditing] = useState(false);
     console.error(err);
   }
 };
+
+//commits file view
+
+const viewFiles = async (commitId) => {
+
+  try {
+
+    if (expandedCommit === commitId) {
+      setExpandedCommit(null);
+      return;
+    }
+
+    if (!commitFiles[commitId]) {
+
+      const res = await api.get(
+        `http://localhost:3002/repo/${id}/commits/${commitId}/files`
+      );
+  
+
+      setCommitFiles(prev => ({
+        ...prev,
+        [commitId]: res.data
+      }));
+    }
+
+    setExpandedCommit(commitId);
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+};
+
+
 
 //curr add
 const deleteRepository = async () => {
@@ -172,7 +221,7 @@ const deleteIssue = async (issueId) => {
 const currentUserId = localStorage.getItem("userId");
 
 const isOwner =repo?.owner?._id?.toString() === currentUserId;
-
+console.log(commitFiles);
 
   return (
     <>
@@ -208,6 +257,77 @@ const isOwner =repo?.owner?._id?.toString() === currentUserId;
 >
   Copy Repository ID
 </button>
+
+<hr />
+
+<h2>Commit History</h2>
+
+{commits.length === 0 ? (
+  <p>No commits found.</p>
+) : (
+  commits.map((commit) => (
+    <div
+
+    
+      // key={commit.id} 
+      key={commit.commitId}
+      style={{
+        border: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "10px",
+        borderRadius: "6px",
+      }}
+    >
+       {/* <pre>
+      {JSON.stringify(commit,null,2)}
+      </pre> */}
+
+
+      <h4>{commit.message}</h4>
+
+      <p>
+        {/* <strong>Commit ID:</strong> {commit.id} */}
+        <strong>Commit ID:</strong> {commit.commitId}
+      </p>
+
+      <p>
+        <strong>Date:</strong>{" "}
+        {new Date(commit.date).toLocaleString()}
+      </p>
+
+       <button
+          onClick={() => viewFiles(commit.id)} //view commit files
+        >
+          {
+            expandedCommit === commit.commitId
+              ? "Hide Files"
+              : "View Files"
+          }
+        </button>
+
+        {
+          expandedCommit === commit.id && (
+
+            <ul style={{ marginTop: "10px" }}>
+
+              {
+                commitFiles[commit.id]?.map((file) => (
+
+                  <li key={file}>
+                    {file}
+                  </li>
+
+                ))
+              }
+
+            </ul>
+
+          )
+        }
+
+    </div>
+  ))
+)}
 
         <h3>
           Issues :

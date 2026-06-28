@@ -40,5 +40,11 @@ repoRouter.patch(
  repoController.toggleVisibilityById
 );
 
+//to show files in commit
+repoRouter.get(
+    "/repo/:repoId/commits/:commitId/files",
+    repoController.getCommitFiles
+);
+
 
 module.exports=repoRouter; 

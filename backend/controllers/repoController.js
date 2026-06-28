@@ -236,6 +236,57 @@ async function getRepositoryCommits(req, res) {
     });
   }
 }
+//to show commit files
+async function getCommitFiles(req, res) {
+    try {
+
+        const { repoId, commitId } = req.params;
+
+//temp
+
+//         console.log("Repo ID:", repoId);
+// console.log("Commit ID:", commitId);
+
+// const prefix = `repositories/${repoId}/commits/${commitId}/`;
+
+// console.log("Searching Prefix:", prefix);
+
+
+        const data = await s3.listObjectsV2({
+            Bucket: S3_BUCKET,
+            Prefix: `repositories/${repoId}/commits/${commitId}/`
+        }).promise();
+// //temp
+// console.log(data.Contents);
+        
+        const files = [];
+
+        for (const object of data.Contents) {
+
+            const key = object.Key;
+
+            const fileName = key.split("/").pop();
+
+            // if (fileName) {
+            //     files.push(fileName);
+            // }
+if (fileName && fileName !== "commit.json") {
+    files.push(fileName);
+}
+        }
+
+        res.json(files);
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+            message: "Unable to fetch files"
+        });
+
+    }
+}
 module.exports={
     deleteRepositoryById,
     toggleVisibilityById,
@@ -246,6 +297,7 @@ module.exports={
     fetchRepositoryById,
     getAllRepositories,
     getRepositoryCommits,
+    getCommitFiles
 }
 
 
