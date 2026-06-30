@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
+//css
+import "./CreateRepository.css";
 
 const CreateRepository = () => {
   const navigate = useNavigate();
@@ -59,14 +61,21 @@ const CreateRepository = () => {
   return (
     <>
       <Navbar />
+      <div className="create-repo-page">
 
-      <div className="create-repo-container">
-        <h2>Create a New Repository</h2>
+    <div className="create-repo-card">
 
-        <form onSubmit={handleSubmit}>
-          <label>Repository Name</label>
+      
+        <h2 className="create-title"> 📦Create  New Repository</h2>
+        <p className="create-subtitle">
+            Create a repository to manage your project files,
+            commits and issues.
+        </p>
 
-          <input
+        <form  className="create-form" onSubmit={handleSubmit}>
+          <label className="form-label">Repository Name</label>
+
+          <input className="form-input"
             type="text"
             name="name"
             value={repoData.name}
@@ -74,17 +83,17 @@ const CreateRepository = () => {
             required
           />
 
-          <label>Description</label>
+          <label className="form-label">Description</label>
 
-          <textarea
+          <textarea className="form-textarea"
             name="description"
             value={repoData.description}
             onChange={handleChange}
           />
 
-          <label>Visibility</label>
+          <label className="form-label">Visibility</label>
 
-          <select
+          <select className="form-select"
             value={repoData.visibility}
             onChange={(e) =>
               setRepoData({
@@ -93,15 +102,18 @@ const CreateRepository = () => {
               })
             }
           >
-            <option value="true">Public</option>
-            <option value="false">Private</option>
+            <option value="true">🌍Public</option>
+            <option value="false">🔒Private</option>
           </select>
 
-          <button type="submit">
+          <button  className="create-btn"type="submit">
             Create Repository
           </button>
         </form>
       </div>
+       </div>
+
+  
     </>
   );
 };
