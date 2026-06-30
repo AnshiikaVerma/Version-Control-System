@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 
 import { useNavigate } from "react-router-dom";
-
+//css file
+import "./RepositoryDetails.css";
 
 const RepositoryDetails = () => {
   const navigate = useNavigate();
@@ -22,6 +23,14 @@ const [description, setDescription] = useState("");
 const [editName,setEditName] = useState("");
 const [editDescription,setEditDescription] = useState("");
 const [editing,setEditing] = useState(false);
+//commits
+const [commits, setCommits] = useState([]);
+//commits file
+const [expandedCommit, setExpandedCommit] = useState(null);
+
+const [commitFiles, setCommitFiles] = useState({});
+
+
 
   useEffect(() => {
     const fetchRepo = async () => {
@@ -40,7 +49,12 @@ const [editing,setEditing] = useState(false);
     );
 
     setIssues(issueRes.data);
+//commit fetching too
+const commitRes = await api.get(
+  `http://localhost:3002/repo/${id}/commits`
+);
 
+setCommits(commitRes.data);
 
       } catch (err) {
         console.error(err);
@@ -79,6 +93,42 @@ const [editing,setEditing] = useState(false);
     console.error(err);
   }
 };
+
+//commits file view
+
+const viewFiles = async (commitId) => {
+
+  try {
+
+    if (expandedCommit === commitId) {
+      setExpandedCommit(null);
+      return;
+    }
+
+    if (!commitFiles[commitId]) {
+
+      const res = await api.get(
+        `http://localhost:3002/repo/${id}/commits/${commitId}/files`
+      );
+  
+
+      setCommitFiles(prev => ({
+        ...prev,
+        [commitId]: res.data
+      }));
+    }
+
+    setExpandedCommit(commitId);
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+};
+
+
 
 //curr add
 const deleteRepository = async () => {
@@ -172,18 +222,27 @@ const deleteIssue = async (issueId) => {
 const currentUserId = localStorage.getItem("userId");
 
 const isOwner =repo?.owner?._id?.toString() === currentUserId;
+console.log(commitFiles);
+
 
 
   return (
     <>
       <Navbar />
 
-      <div className="repo-details">
-        <h1>{repo.name}</h1>
+      <div className="repo-details-page">
+    <div className="repo-details-container">
+        {/* <h1>{repo.name}</h1> */}
+          <h1 className="repo-title">
+            {repo.name}
+          </h1>
 
-        <p>{repo.description}</p>
+        {/* <p>{repo.description}</p> */}
+        <p className="repo-description">
+          {repo.description}
+        </p>
 
-        <h3>
+        {/* <h3>
           Visibility :
           {" "}
           {repo.visibility ? "Public" : "Private"}
@@ -195,63 +254,199 @@ const isOwner =repo?.owner?._id?.toString() === currentUserId;
           {repo.owner?.username}
         </h3>
 
-        <h3>
-          Issues :
-          {" "}
-          {/* {repo.issues?.length || 0} */}
-          {issues.length}
-        </h3>
-                {/* <button
-              onClick={() => navigate(`/repo/edit/${repo._id}`)}
-            >
-              Edit Repository
-            </button>
 
-            <button onClick={deleteRepository}>
-              Delete Repository
-            </button> */}
+        <h3>
+  Repository ID : {repo._id}
+</h3>
+
+<button
+  onClick={() => {
+    navigator.clipboard.writeText(repo._id);
+    alert("Repository ID copied!");
+  }}
+>
+  Copy Repository ID
+</button> */}
+
+<div className="repo-info-grid">
+
+  <div className="info-card">
+    <span className="info-label">
+      Visibility
+    </span>
+
+    <span
+      className={
+        repo.visibility
+          ? "visibility public"
+          : "visibility private"
+      }
+    >
+      {repo.visibility ? "🌍 Public" : " 🔒 Private"}
+    </span>
+  </div>
+
+  <div className="info-card">
+    <span className="info-label">
+      Owner
+    </span>
+
+    <span>
+       👤{repo.owner?.username}
+    </span>
+  </div>
+
+  <div className="info-card repo-id-card">
+    <span className="info-label">
+       Repository ID
+    </span>
+
+    <code>
+      🆔 {repo._id}
+    </code>
+  </div>
+
+  <button
+    className="copy-btn"
+    onClick={() => {
+      navigator.clipboard.writeText(repo._id);
+      alert("Repository ID copied!");
+    }}
+  >
+    📋 Copy Repository ID
+  </button>
+
+</div>
+
+<div className="section-divider"></div>
+
+{/* <h2>Commit History</h2> */}
+
+<h2 className="section-title">
+ 🕒 Commit History
+</h2>
+
+{commits.length === 0 ? (
+  <p>No commits found.</p>
+) : (
+  commits.map((commit) => (
+  
+    <div
+    key={commit.commitId}
+    className="commit-card"
+>
+      
+<div className="commit-header">
+      <h4 className="commit-message">
+            {commit.message}
+        </h4>
+        <button
+        className="secondary-btn"
+        onClick={() => viewFiles(commit.id)}
+    >
+        {expandedCommit === commit.id
+            ? "▼ Hide Files"
+            : "▶ View Files"}
+    </button>
+</div>
+      {/* <p>
+        <strong>Commit ID:</strong> {commit.id.slice(0,8)}
+      </p>
+
+      <p>
+        <strong>Date:</strong>{" "}
+        {new Date(commit.date).toLocaleString()}
+      </p> */}
+
+      <div className="commit-meta">
+
+    <span>
+        Commit ID:
+        <code>
+            {commit.id} 
+              </code>
+    </span>
+
+    <span>
+
+        {new Date(commit.date).toLocaleString()}
+
+    </span>
+
+</div>
+
+        {
+          expandedCommit === commit.id && (
+
+            // <ul style={{ marginTop: "10px" }}>
+            <ul className="files-list">
+
+              {
+                commitFiles[commit.id]?.map((file) => (
+
+                  <li key={file}>
+                   📄 {file}
+                  </li>
+
+                ))
+              }
+
+            </ul>
+
+          )
+        }
+
+    </div>
+  ))
+)}
+
+        <h3>
+         🐞 Issues :
+          {" "}
+        (  {issues.length} )
+        </h3>
+               
 
           {isOwner && (
   <>
+  <div className="repo-actions">
     <button
       onClick={() => navigate(`/repo/edit/${repo._id}`)}
     >
       Edit Repository
     </button>
 
-    <button onClick={deleteRepository}>
+    <button  className="danger-btn" onClick={deleteRepository}>
       Delete Repository
     </button>
+    </div>
   </>
 )} 
 
-         <hr/>
+   <div className="section-divider"></div>
 
-  <h2>Issues ({issues.length})</h2>
+  <h2 className="section-title">Issues ({issues.length})</h2>
 {
   issues.map((issue) => (
-    <div key={issue._id}>
-      <h4>{issue.title}</h4>
+   <div key={issue._id} className="issue-card">
+    <div className="issue-header">
+      <h3 className="issue-title">{issue.title}</h3>
 
-      <p>{issue.description}</p>
 
-      {/* <p>Status: {issue.status}</p> */}
-       <p>Status: 
-       <span
-    style={{
-      fontWeight: "bold",
-      marginLeft: "8px",
-      color:
-        issue.status === "open"
-          ? "green"
-          : "red",
-    }}  
-  >  {issue.status}</span>
-
-        </p>
+   <span className={`status-badge ${
+                issue.status === "open"
+                    ? "status-open"
+                    : "status-closed"
+            }`}
+        >
+            {issue.status}
+        </span>
+</div>
+   <p className="issue-description">{issue.description}</p>
+        
          {isOwner && (
-          <>
- <button
+           <div className="issue-actions">
+ <button className="secondary-btn"
   onClick={() => toggleIssueStatus(issue)}
 >
   {issue.status === "open"
@@ -259,7 +454,7 @@ const isOwner =repo?.owner?._id?.toString() === currentUserId;
     : "Reopen Issue"}
 </button>
 
-<button
+<button className="danger-btn"
   onClick={() => {
     if (
       window.confirm(
@@ -270,39 +465,41 @@ const isOwner =repo?.owner?._id?.toString() === currentUserId;
     }
   }}
 >
-  Delete Issue
+  Delete 
 </button>
-</>
+</div>
          )}
-      <hr />
+
+ <div className="section-divider"></div>
     </div>
   ))
 }
 
-<h2>Create Issue</h2>
+<div className="create-issue-card">
+<h2 className="section-title">Create Issue</h2>
 
-<input
+<input className="repo-input"
   type="text"
   placeholder="Issue Title"
   value={title}
   onChange={(e) => setTitle(e.target.value)}
 />
 
-<br /><br />
 
-<textarea
+<textarea className="repo-textarea"
   placeholder="Issue Description"
   value={description}
   onChange={(e) => setDescription(e.target.value)}
 />
 
-<br /><br />
 
-<button onClick={createIssue}>
-  Create Issue
+
+<button className="primary-btn" onClick={createIssue}>
+ ➕ Create Issue
 </button>
+</div>
 
-
+      </div>
       </div>
     </>
   );

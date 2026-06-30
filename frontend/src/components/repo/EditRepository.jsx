@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import "./editRepository.css";
+import Navbar from "../Navbar";
+
 
 const EditRepository = () => {
     const navigate = useNavigate();
@@ -61,42 +64,98 @@ const updateRepository = async () => {
     alert("Update Failed");
   }
 };
-  return (
-  <div>
+//   return (
+//   <div>
 
-    <h1>Edit Repository</h1>
+//     <h1>Edit Repository</h1>
 
-    <input
-      type="text"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-    />
+//     <input
+//       type="text"
+//       value={name}
+//       onChange={(e) => setName(e.target.value)}
+//     />
 
-    <br /><br />
+//     <br /><br />
 
-    <textarea
-      value={description}
-      onChange={(e) => setDescription(e.target.value)}
-    />
+//     <textarea
+//       value={description}
+//       onChange={(e) => setDescription(e.target.value)}
+//     />
 
-    <br /><br />
+//     <br /><br />
 
-    <select
-      value={visibility}
-      onChange={(e) =>
-        setVisibility(e.target.value === "true")
-      }
-    >
-      <option value="true">Public</option>
-      <option value="false">Private</option>
-    </select>
-<br /><br />
+//     <select
+//       value={visibility}
+//       onChange={(e) =>
+//         setVisibility(e.target.value === "true")
+//       }
+//     >
+//       <option value="true">Public</option>
+//       <option value="false">Private</option>
+//     </select>
+// <br /><br />
 
-<button onClick={updateRepository}>
-  Save Changes
-</button>
-  </div>
+// <button onClick={updateRepository}>
+//   Save Changes
+// </button>
+//   </div>
+// );
+return (
+  <>
+    <Navbar />
+
+    <div className="edit-repo-page">
+      <div className="edit-repo-card">
+
+        <h1>Edit Repository</h1>
+
+        <p className="edit-subtitle">
+          Update your repository information.
+        </p>
+
+        <label>Repository Name</label>
+
+        <input
+          className="repo-input"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <label>Description</label>
+
+        <textarea
+          className="repo-textarea"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <label>Visibility</label>
+
+        <select
+          className="repo-select"
+          value={visibility}
+          onChange={(e) =>
+            setVisibility(e.target.value === "true")
+          }
+        >
+          <option value="true">Public</option>
+          <option value="false">Private</option>
+        </select>
+
+        <button
+          className="save-btn"
+          onClick={updateRepository}
+        >
+          Save Changes
+        </button>
+
+      </div>
+    </div>
+  </>
 );
+
+
 };
 
 export default EditRepository;

@@ -1,177 +1,405 @@
 
 
-.profile-page-wrapper {
-   
-  /* display: flex;
-  min-height: 100vh;
-  color: whitesmoke;
-  width: 100%; */
-   display: flex;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 30px;
-  gap: 40px;
- 
-
-}
-.name h3 {
-  font-size: 28px;
-  font-weight: 600;
-  margin-top: 20px;
+.name{
+margin-top:12px;
+text-align:left;
 }
 
-.user-profile-section {
-  /* width: 250px; */
-    width: 320px;
-  padding: 30px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 10px;
+.name h3{
+
+ margin:0;
+    font-size:26px;
+    font-weight:600;
+    color:#24292f;
+
 }
 
+.user-profile-section{
+    width:296px;
+    flex-shrink:0;
+    position:sticky;
+    top:30px;
+    padding-right:32px;
+}
 .user-repo-section {
   margin: 0px auto;
   display: flex;
   flex-wrap: wrap;
 }
+.profile-image{
 
-.user-name {
-  /* width: 250px; */
-  margin: 10px 20px 10px 10px;
-  /* margin: 10px auto; */
+transition:.25s;
+
 }
 
-.profile-image {
-  /* margin: 10px auto;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: grey; */
-   width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  margin: 0 auto;
+.profile-image:hover{
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-object-fit: cover;
-  border: 1px solid #30363d;
+transform:scale(1.03);
+
 }
 
-.follow-btn {
-  background-color: #20272d;
-  width: 250px;
-  margin: 10px auto;
-  height: 40px;
-  border-radius: 10px;
-  color: whitesmoke;
+
+.profile-image{
+
+width:400px;
+height:270px;
+max-width:100%;
+margin:0 auto;
+margin-bottom:18px;
+border-radius:50%;
+
+background-size:cover;
+background-position:center;
+
+border:1px solid #c4c7ca;
+
+box-shadow:none;
+
 }
 
-.follower {
-  display: flex;
-  justify-content: center;
-  width: 250px;
-  height: 30px;
-  gap: 10px;
-  margin: 10px auto;
+ .follow-btn{
+
+margin-top:18px;
+
+width:100%;
+
+height:33px;
+
+background:#2da44e;
+
+color:white;
+
+font-weight:600;
+
+border-radius:8px;
+
+transition:.2s;
+
 }
 
-.repo-card-wrapper {
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 40px 20px;
+.follow-btn:hover{
+
+background:#218739;
+
 }
 
-.repo {
-  border: 0.5px solid grey;
-  border-radius: 10px;
-  width: 400px;
-  height: 210px;
-  padding: 20px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+ .follower{
+
+display:flex;
+
+justify-content:flex-start;
+
+gap:30px;
+
+margin-top:28px;
+
+padding-top:22px;
+
+border-top:1px solid #d0d7de;
+
 }
 
-.repo-name {
-  cursor: pointer;
-  color: #408ced;
-  font-size: 20px;
+.stat{
+
+text-align:center;
+
 }
 
-.description {
-  color: grey;
-  font-size: 15px;
+.stat h4{
+
+margin:0;
+
+font-size:22px;
+
+color:#24292f;
+
 }
 
-@media screen and (max-width: 750px) {
-  .repo {
-    width: 100%;
-  }
+.stat span{
+
+font-size:14px;
+
+color:#656d76;
+
 }
 
-@media screen and (max-width: 570px) {
-  .user-profile-section {
-    margin: auto;
-  }
-
-  .profile-page-wrapper {
-    display: block;
-  }
-}
 
 #logout:hover {
   border: 1px solid white;
 }
 
-/* .UnderlineNav-item {
-  color: white !important;
-} */
+ .heat-map-section{
 
+flex:1;
+ min-width:0;
+}
+.heatmap-wrapper{
 
-a[class*="UnderlineItem"] {
-  color: white !important;
+width:100%;
+ min-height:250px;
+
+}
+.heatmap-scroll{
+
+overflow-x:auto;
+
+padding-bottom:10px;
+
 }
 
-a[class*="UnderlineItem"] span {
-  color: white !important;
+.heatmap-scroll::-webkit-scrollbar{
+
+height:8px;
+
 }
 
-a[class*="UnderlineItem"] svg {
-  color: white !important;
-}
+.heatmap-scroll::-webkit-scrollbar-thumb{
 
+background:#d0d7de;
 
-.heat-map-section {
-  flex: 1;
+border-radius:20px;
 
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-
-.contribution-card {
-  border: 1px solid #30363d;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: #0d1117;
-   width:100%;
-  max-width:1200px;
-  overflow-x:auto;
 }
 
 
+.contribution-card{
+
+background:#ffffff;
+
+border:1px solid #d8dee4;
+
+border-radius:8px;
+
+padding:24px;
+
+width:100%;
+
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+
+}
+.contribution-title{
+
+margin:0 0 22px;
+
+font-size:16px;
+
+font-weight:600;
+
+color:#24292f;
+
+}
+
+
+
+#logout{
+
+position:fixed;
+
+bottom:30px;
+
+right:30px;
+
+background:rgb(186, 181, 181);
+
+padding:12px 22px;
+
+border-radius:8px;
+
+font-weight:600;
+
+box-shadow:0 6px 18px rgba(0,0,0,.15);
+
+}
 #logout:hover{
-border: 1px solid white;
+
+background:#a40e26;
+
+transform:translateY(-2px);
+
 }
-#logout {
-  margin-right: 30px;
+
+.profile-role{
+
+margin-top:6px;
+
+font-size:14px;
+
+color:#656d76;
+
+}
+.profile-email{
+margin-top:6px;
+
+font-size:14px;
+
+color:#656d76;
+}
+
+
+.section-title{
+
+margin:0 0 18px;
+font-size:20px;
+font-weight:600;
+margin-bottom:18px;
+
+margin-bottom:16px;
+font-weight:700;
+
+color:#24292f;
+
+}
+
+.profile-container{
+    min-height:100vh;
+    background:#f6f8fa;
+    padding-bottom:40px;
+}
+.profile-page-wrapper{
+    max-width:1280px;
+    margin:32px auto;
+    padding:0 32px ;
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+}
+
+
+/* RESPONSIVENESS */
+
+/* Tablet (1024px) */
+
+@media (max-width:1024px){
+
+.profile-page-wrapper{
+
+    flex-direction:column;
+    gap:32px;
+
+}
+
+.user-profile-section{
+
+    width:100%;
+    position:static;
+    padding-right:0;
+
+}
+
+.profile-image{
+
+    width:220px;
+    height:220px;
+
+}
+
+.heat-map-section{
+
+    width:100%;
+
+}
+
+}
+
+/* Mobile */
+@media (max-width:768px){
+
+.profile-page-wrapper{
+
+    padding:0 16px;
+
+    margin:24px auto;
+
+}
+
+.profile-image{
+
+    width:180px;
+    height:180px;
+
+}
+
+.name{
+
+    text-align:center;
+
+}
+
+.follow-btn{
+
+    margin-top:16px;
+
+}
+
+.follower{
+
+    justify-content:center;
+
+}
+
+#logout{
+
+    right:16px;
+    bottom:16px;
+
+}
+
+}
+
+
+/* Small Mobile (480px) */
+
+@media (max-width:480px){
+
+.profile-image{
+
+    width:150px;
+    height:150px;
+
+}
+
+.name h3{
+
+    font-size:22px;
+
+}
+
+.profile-email,
+.profile-role{
+
+    font-size:13px;
+
+}
+
+.follower{
+
+    gap:22px;
+
+}
+
+.stat h4{
+
+    font-size:20px;
+
+}
+
+.section-title{
+
+    font-size:18px;
+
+}
+
+}
+
+@media (max-width:768px){
+
+#logout{
+
+    padding:10px 16px;
+    font-size:14px;
+
+}
+
 }

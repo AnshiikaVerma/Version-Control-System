@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav>
       <Link to="/">
-        <div>
+        <div className="navbar-logo">
           <img
             src="https://www.github.com/images/modules/logos_page/GitHub-Mark.png"
             alt="GitHub Logo"
@@ -14,7 +14,7 @@ const Navbar = () => {
           <h3>GitHub</h3>
         </div>
       </Link>
-      <div>
+      <div className="navbar-links">
         <Link to="/create">
           <p>Create a Repository</p>
         </Link>

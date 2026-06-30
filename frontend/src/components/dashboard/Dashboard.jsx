@@ -102,6 +102,19 @@ const toggleStar = async (repoId) => {
 return (
     <>
     <Navbar/> 
+<div className="dashboard-hero">
+
+<h1>
+Welcome back 👋
+</h1>
+
+<p>
+Manage your repositories, commits and issues in one place.
+</p>
+
+</div>
+
+
 <section id="dashboard">
     <aside>
          <h3>Suggested Repositories </h3>
@@ -110,22 +123,21 @@ return (
     id => id.toString() === repo._id.toString()
 );
           return(
-        // <div key={repo._id}>
-        <div key={repo._id}>
-        <div
-   
-   onClick={() => navigate(`/repo/${repo._id}`)}
-   style={{ cursor: "pointer" }}
->
+      
+        <div  className="repo-card"key={repo._id}   onClick={() => navigate(`/repo/${repo._id}`)}>
+            <div className='repo-card-header'>
         <h4>{repo.name}  </h4>
-            </div>
-      <h4> <span  onClick={()=>toggleStar(repo._id)}
-        style={{cursor:"pointer"}}>
+           
+      <span  className="star-btn" onClick={(e)=>{ e.stopPropagation();
+      toggleStar(repo._id)}}
+        >
        {
             isStarred
             ? <StarFillIcon size={18} fill="gold"/>
             : <StarIcon size={18}/>
-        }</span> </h4> 
+        }</span> 
+</div>
+ 
    
   <p>{repo.description}</p>
 
@@ -140,19 +152,19 @@ return (
 <div id="search"><input type="text" value={searchQuery} placeholder='Search Your Repositories' onChange={(e)=>setSearchQuery(e.target.value)} /></div>
          {searchResults.map((repo)=>
             // <div key={repo._id}>
-            <div
+            <div className="repo-card"
    key={repo._id}
    onClick={() => navigate(`/repo/${repo._id}`)}
    style={{ cursor: "pointer" }}
 >
                 <h4>{repo.name}</h4>
-                <h4>{repo.description}</h4>
+                <p>{repo.description}</p>
             </div>
          )}
 
     </main>
     <aside>
-        <h3>Upcoming  Events</h3>
+        <h3> 📅Upcoming  Events</h3>
         <ul>
          <li><p>Tech Conference - Dec 15</p></li>
          <li><p>Developers Meetup - Dec 25</p></li>

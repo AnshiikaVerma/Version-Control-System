@@ -3,7 +3,8 @@ const Repository=require("../models/repoModel");
 const User=require("../models/userModel");
 const Issue=require("../models/issueModel");
 
-
+const { s3, S3_BUCKET } = require("../config/aws-config");
+const path = require("path");
 
 async function  getAllRepositories(req,res){
   try{
@@ -130,6 +131,7 @@ catch(err){
     res.status(500).send("Server Error!");
 }
 }; 
+
 async function  toggleVisibilityById(req,res){  
 const {id}=req.params;  //id of repo which we want to update
 try{
@@ -177,6 +179,114 @@ res.json({message:"Repository deleted successfully !"  });
 };
 
 
+async function getRepositoryCommits(req, res) {
+  const { id } = req.params;
+
+  try {
+    // Repository exists ya nahi
+    const repository = await Repository.findById(id);
+
+    if (!repository) {
+      return res.status(404).json({
+        message: "Repository not found",
+      });
+    }
+
+    // S3 se us repository ke saare objects lao
+    const data = await s3
+      .listObjectsV2({
+        Bucket: S3_BUCKET,
+        Prefix: `repositories/${id}/commits/`,
+      })
+      .promise();
+
+    const objects = data.Contents || [];
+
+    const commits = [];
+
+    // Sirf commit.json files read karni hain
+    for (const object of objects) {
+      if (!object.Key.endsWith("commit.json")) continue;
+
+      const file = await s3
+        .getObject({
+          Bucket: S3_BUCKET,
+          Key: object.Key,
+        })
+        .promise();
+
+      const commitData = JSON.parse(
+        file.Body.toString()
+      );
+
+      const commitId = object.Key.split("/")[3];
+
+      commits.push({
+        id: commitId,
+        message: commitData.message,
+        date: commitData.date,
+      });
+    }
+
+    res.json(commits);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Unable to fetch commits",
+    });
+  }
+}
+//to show commit files
+async function getCommitFiles(req, res) {
+    try {
+
+        const { repoId, commitId } = req.params;
+
+//temp
+
+//         console.log("Repo ID:", repoId);
+// console.log("Commit ID:", commitId);
+
+// const prefix = `repositories/${repoId}/commits/${commitId}/`;
+
+// console.log("Searching Prefix:", prefix);
+
+
+        const data = await s3.listObjectsV2({
+            Bucket: S3_BUCKET,
+            Prefix: `repositories/${repoId}/commits/${commitId}/`
+        }).promise();
+// //temp
+// console.log(data.Contents);
+        
+        const files = [];
+
+        for (const object of data.Contents) {
+
+            const key = object.Key;
+
+            const fileName = key.split("/").pop();
+
+            // if (fileName) {
+            //     files.push(fileName);
+            // }
+if (fileName && fileName !== "commit.json") {
+    files.push(fileName);
+}
+        }
+
+        res.json(files);
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+            message: "Unable to fetch files"
+        });
+
+    }
+}
 module.exports={
     deleteRepositoryById,
     toggleVisibilityById,
@@ -185,7 +295,9 @@ module.exports={
     createRepository,
     fetchRepositoryByName,
     fetchRepositoryById,
-    getAllRepositories
+    getAllRepositories,
+    getRepositoryCommits,
+    getCommitFiles
 }
 
 
