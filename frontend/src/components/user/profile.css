@@ -14,22 +14,6 @@ text-align:left;
 
 }
 
-
-/* .user-profile-section{
-    width:303px;
-    flex-shrink:0;
-
-    background:#ffffff;
-    border:1px solid #d0d7de;
-    border-radius:14px;
-
-    padding:28px;
- position:sticky;
-    top:30px;
-  
-    box-shadow:none;
-} */
-
 .user-profile-section{
     width:296px;
     flex-shrink:0;
@@ -148,9 +132,7 @@ color:#656d76;
  .heat-map-section{
 
 flex:1;
-
-min-width:900px;
-
+ min-width:0;
 }
 .heatmap-wrapper{
 
@@ -181,21 +163,6 @@ border-radius:20px;
 }
 
 
-/* .contribution-card{
-
-background:#ffffff;
-
-display:block;
-border:1px solid #d8dee4;
-width: 100%;
-border-radius:8px;
-
-padding:16px;
-
-overflow-x:auto;
-
-} */
-
 .contribution-card{
 
 background:#ffffff;
@@ -209,6 +176,7 @@ padding:24px;
 width:100%;
 
 overflow-x:auto;
+-webkit-overflow-scrolling:touch;
 
 }
 .contribution-title{
@@ -273,8 +241,6 @@ color:#656d76;
 .section-title{
 
 margin:0 0 18px;
-
-/* font-size:32px; */
 font-size:20px;
 font-weight:600;
 margin-bottom:18px;
@@ -288,7 +254,6 @@ color:#24292f;
 
 .profile-container{
     min-height:100vh;
-    /* background:#ffffff; */
     background:#f6f8fa;
     padding-bottom:40px;
 }
@@ -299,4 +264,142 @@ color:#24292f;
     display:flex;
     gap:40px;
     align-items:flex-start;
+}
+
+
+/* RESPONSIVENESS */
+
+/* Tablet (1024px) */
+
+@media (max-width:1024px){
+
+.profile-page-wrapper{
+
+    flex-direction:column;
+    gap:32px;
+
+}
+
+.user-profile-section{
+
+    width:100%;
+    position:static;
+    padding-right:0;
+
+}
+
+.profile-image{
+
+    width:220px;
+    height:220px;
+
+}
+
+.heat-map-section{
+
+    width:100%;
+
+}
+
+}
+
+/* Mobile */
+@media (max-width:768px){
+
+.profile-page-wrapper{
+
+    padding:0 16px;
+
+    margin:24px auto;
+
+}
+
+.profile-image{
+
+    width:180px;
+    height:180px;
+
+}
+
+.name{
+
+    text-align:center;
+
+}
+
+.follow-btn{
+
+    margin-top:16px;
+
+}
+
+.follower{
+
+    justify-content:center;
+
+}
+
+#logout{
+
+    right:16px;
+    bottom:16px;
+
+}
+
+}
+
+
+/* Small Mobile (480px) */
+
+@media (max-width:480px){
+
+.profile-image{
+
+    width:150px;
+    height:150px;
+
+}
+
+.name h3{
+
+    font-size:22px;
+
+}
+
+.profile-email,
+.profile-role{
+
+    font-size:13px;
+
+}
+
+.follower{
+
+    gap:22px;
+
+}
+
+.stat h4{
+
+    font-size:20px;
+
+}
+
+.section-title{
+
+    font-size:18px;
+
+}
+
+}
+
+@media (max-width:768px){
+
+#logout{
+
+    padding:10px 16px;
+    font-size:14px;
+
+}
+
 }

@@ -74,3 +74,140 @@
 .save-btn:hover{
     background:#218739;
 }
+
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:1024px){
+
+.edit-repo-page{
+
+    padding:28px;
+
+}
+
+.edit-repo-card{
+
+    max-width:100%;
+
+    padding:30px;
+
+}
+
+}
+
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:768px){
+
+.edit-repo-page{
+
+    padding:16px;
+
+}
+
+.edit-repo-card{
+
+    width:100%;
+
+    max-width:none;
+
+    padding:22px;
+
+    box-sizing:border-box;
+
+}
+
+.edit-repo-card h1{
+
+    font-size:26px;
+
+}
+
+.edit-subtitle{
+
+    font-size:15px;
+
+    margin-bottom:22px;
+
+}
+
+.edit-repo-card label{
+
+    margin-top:16px;
+
+}
+
+.repo-input,
+.repo-textarea,
+.repo-select{
+
+    font-size:14px;
+
+    padding:10px;
+
+}
+
+.repo-textarea{
+
+    min-height:120px;
+
+}
+
+.save-btn{
+
+    width:100%;
+
+    padding:12px;
+
+}
+
+}
+
+
+/* ===========================
+   Small Phones
+=========================== */
+
+@media (max-width:480px){
+
+.edit-repo-page{
+
+    padding:12px;
+
+}
+
+.edit-repo-card{
+
+    padding:18px;
+
+    border-radius:8px;
+
+}
+
+.edit-repo-card h1{
+
+    font-size:22px;
+
+}
+
+.edit-subtitle{
+
+    font-size:14px;
+
+}
+
+.repo-input,
+.repo-textarea,
+.repo-select{
+
+    font-size:14px;
+
+}
+
+}

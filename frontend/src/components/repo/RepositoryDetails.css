@@ -72,6 +72,7 @@ border-color:#0969da;
 
 .repo-id-card code{
     word-break:break-all;
+    display:block;
 }
 
 .copy-btn{
@@ -121,20 +122,6 @@ border-color:#0969da;
     margin-top:0;
     margin-bottom:12px;
 }
-
-/* .secondary-btn{
-    margin-top:10px;
-    background:#f6f8fa;
-    border:1px solid #d0d7de;
-    padding:8px 16px;
-    border-radius:6px;
-    cursor:pointer;
-    transition:.2s;
-} */
-
-/* .secondary-btn:hover{
-    background:#eaeef2;
-} */
 .secondary-btn{
     margin-top:14px;
     display:inline-flex;
@@ -167,15 +154,7 @@ border-color:#0969da;
     transform:scale(.98);
 }
 
-/* .files-list{
-    margin-top:15px;
-    padding-left:20px;
-} */
 
-/* .files-list li{
-    margin-bottom:8px;
-    color:#0969da;
-} */
  .files-list{
     list-style:none;
     padding-left:0;
@@ -234,6 +213,7 @@ border-color:#0969da;
     padding:12px;
     font-size:15px;
     box-sizing:border-box;
+min-height:160px;
 }
 
 .repo-input{
@@ -277,6 +257,7 @@ border-color:#0969da;
     font-size:14px;
 
     color:#57606a;
+    flex-wrap:wrap;
 
 }
 
@@ -373,5 +354,151 @@ margin-bottom:18px;
 .create-issue-card .repo-textarea{
 
 margin-bottom:20px;
+
+}
+
+/* RESPONSIVENESS */
+
+ /* Tablet (≤1024px) */
+ @media (max-width:1024px){
+
+.repo-details-page{
+
+    padding:24px;
+
+}
+
+.repo-details-container{
+
+    padding:28px;
+
+}
+
+.commit-header{
+
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+
+}
+
+.repo-actions{
+
+    flex-wrap:wrap;
+
+}
+
+.copy-btn{
+
+    width:100%;
+    align-self:stretch;
+
+}
+
+}
+
+/* Mobile (≤768px) */
+
+@media (max-width:768px){
+
+.repo-details-page{
+
+    padding:16px;
+
+}
+
+.repo-details-container{
+
+    padding:20px;
+
+}
+
+.repo-title{
+
+    font-size:28px;
+
+}
+
+.repo-description{
+
+    font-size:15px;
+
+}
+
+.repo-info-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.issue-header{
+
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+
+}
+
+.commit-meta{
+
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+
+}
+
+.issue-actions{
+
+    flex-direction:column;
+
+}
+
+.repo-actions{
+
+    flex-direction:column;
+
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.copy-btn{
+
+    width:100%;
+    justify-content:center;
+
+}
+
+}
+
+/* Very Small Devices (≤480px) */
+
+@media (max-width:480px){
+
+.repo-title{
+
+    font-size:24px;
+
+}
+
+.section-title{
+
+    font-size:18px;
+
+}
+
+.commit-card,
+.issue-card,
+.create-issue-card{
+
+    padding:16px;
+
+}
+
+.files-list li{
+
+    font-size:13px;
+
+}
 
 }

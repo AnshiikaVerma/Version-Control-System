@@ -50,12 +50,14 @@ cursor:pointer;
 }
 
 .star-card:hover{
+transform:none;
 
-transform:translateY(-3px);
+box-shadow:none;
 
-box-shadow:0 8px 22px rgba(0,0,0,.08);
+background:#fafbfc;
 
 border-color:#0969da;
+
 
 }
 
@@ -153,5 +155,164 @@ text-align:center;
 border-radius:12px;
 
 border:1px solid #d0d7de;
+
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:1024px){
+
+.star-page{
+
+    padding:28px;
+
+}
+
+.star-container{
+
+    max-width:100%;
+
+}
+
+}
+
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:768px){
+
+.star-page{
+
+    padding:16px;
+
+}
+
+.star-container h1{
+
+    font-size:28px;
+
+}
+
+.star-subtitle{
+
+    font-size:15px;
+
+    margin-bottom:22px;
+
+}
+
+.star-card{
+
+    padding:18px;
+
+}
+
+.star-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+}
+
+.star-header h3{
+
+    font-size:20px;
+
+    word-break:break-word;
+
+}
+
+.repo-desc{
+
+    font-size:14px;
+
+}
+
+.repo-owner{
+
+    font-size:14px;
+
+}
+
+.open-btn{
+
+    width:100%;
+
+    margin-top:8px;
+
+}
+
+}
+
+
+/* ===========================
+   Small Phones
+=========================== */
+
+@media (max-width:480px){
+
+.star-page{
+
+    padding:12px;
+
+}
+
+.star-container h1{
+
+    font-size:24px;
+
+}
+
+.star-card{
+
+    padding:16px;
+
+    border-radius:8px;
+
+}
+
+.star-header h3{
+
+    font-size:18px;
+
+}
+
+.visibility{
+
+    font-size:12px;
+
+    padding:5px 10px;
+
+}
+
+.repo-desc,
+.repo-owner{
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+.open-btn{
+
+    padding:10px;
+
+    font-size:14px;
+
+}
+
+.empty-state{
+
+    padding:30px 18px;
+
+}
 
 }
