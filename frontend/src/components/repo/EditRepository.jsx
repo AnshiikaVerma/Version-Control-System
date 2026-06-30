@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./editRepository.css";
+import "./EditRepository.css";
 import Navbar from "../Navbar";
 
 
