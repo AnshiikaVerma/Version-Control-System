@@ -205,6 +205,8 @@ border-color:#0969da;
     background:#218739;
 }
 
+
+
 .repo-input,
 .repo-textarea{
     width:100%;
@@ -213,18 +215,17 @@ border-color:#0969da;
     padding:12px;
     font-size:15px;
     box-sizing:border-box;
-min-height:160px;
 }
 
 .repo-input{
     height:45px;
+    min-height:45px;
 }
 
 .repo-textarea{
     min-height:140px;
     resize:vertical;
 }
-
 .repo-input:focus,
 .repo-textarea:focus{
     outline:none;
