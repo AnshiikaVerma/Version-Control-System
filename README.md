@@ -34,46 +34,6 @@ All committed files are stored on AWS S3 and repository metadata is maintained i
 
 # 🎬 Project Demo
 
-## 📹 Full Project Walkthrough
-
-> **Replace the image below with your GIF**
-
-![PROJECT_DEMO_GIF](./assets/demo.gif)
-
----
-
-# 📸 Screenshots
-
-## Dashboard
-
-
-
-
-
----
-
-## Repository Details
-
-> Replace with screenshot
-
-![Repository Details](./assets/repository-details.png)
-
----
-
-## Commit History
-
-> Replace with screenshot
-
-![Commit History](./assets/commit-history.png)
-
----
-
-## Profile
-
-> Replace with screenshot
-
-![Profile](./assets/profile.png)
-
 ---
 
 # ✨ Features
