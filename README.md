@@ -34,6 +34,7 @@ All committed files are stored on AWS S3 and repository metadata is maintained i
 
 # 🎬 Project Demo
 
+https://drive.google.com/file/d/1TVYxnfGsKPR8Qo9o4cdpsiBeZzgcBktI/view?usp=drive_link
 ---
 
 # ✨ Features
