@@ -224,9 +224,24 @@ Repository Owner can
 
 # 📂 Project Architecture
 
-> Replace this image with architecture diagram.
-
-![Architecture](./assets/architecture.png)
+CLI
+  │
+  ▼
+.myGit
+  │
+Commit
+  │
+Push
+  ▼
+AWS S3
+  ▲
+Pull
+  │
+Backend API (EC2)
+  │
+MongoDB
+  ▲
+React Frontend (Amplify)
 
 ---
 
@@ -335,6 +350,6 @@ Full Stack Developer
 
 LinkedIn: **(Add your LinkedIn URL)**
 
-GitHub: **(Add your GitHub URL)**
+GitHub: **https://github.com/AnshiikaVerma/Version-Control-System**
 
 ---
